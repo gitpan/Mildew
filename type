@@ -1,0 +1,160 @@
+lib/AST/InferredTypeTest.pm:3:class AST::InferredTypeTest extends AST::Base {
+lib/AST/InferredTypeTest.pm:9:        ($ret,@setup,AST::Assign->new(lvalue=>$ret,rvalue=>AST::InferredTypeTest->new(value=>$value,test=>$self->test)));
+lib/AST/IntegerConstant.pm:5:    has 'type_info' => (is=>'ro',lazy=>1,default=>sub {Mildew::TypeInfo::IntegerConstant->new()});
+lib/AST/StringConstant.pm:5:    has 'type_info' => (is=>'ro',lazy=>1,default=>sub {Mildew::TypeInfo::StringConstant->new()});
+lib/AST.pm:55:use AST::InferredTypeTest;
+lib/Mildew/Types.pm:4:class Mildew::TypeInfo {
+lib/Mildew/Types.pm:12:        Mildew::Type::Unknown->new();
+lib/Mildew/Types.pm:16:class Mildew::TypeInfo::FromAssignment extends Mildew::TypeInfo {
+lib/Mildew/Types.pm:19:        $self->type(Mildew::Type::SelfRecursive->new());
+lib/Mildew/Types.pm:29:            Mildew::Type::Unknown->new();
+lib/Mildew/Types.pm:33:class Mildew::TypeInfo::Phi extends Mildew::TypeInfo {
+lib/Mildew/Types.pm:35:class Mildew::TypeInfo::IntegerConstant extends Mildew::TypeInfo {
+lib/Mildew/Types.pm:37:        Mildew::Type::IntegerConstant->new();
+lib/Mildew/Types.pm:40:class Mildew::TypeInfo::StringConstant extends Mildew::TypeInfo {
+lib/Mildew/Types.pm:42:class Mildew::TypeInfo::External extends Mildew::TypeInfo {
+lib/Mildew/Types.pm:44:class Mildew::Type {
+lib/Mildew/Types.pm:56:        Mildew::Type::Unknown->new();
+lib/Mildew/Types.pm:109:role Mildew::Type::FETCH {
+lib/Mildew/Types.pm:112:        my $id = Mildew::Type::str($call->identifier);
+lib/Mildew/Types.pm:116:            Mildew::Type::Unknown->new();
+lib/Mildew/Types.pm:120:class Mildew::Type::IntegerConstant extends Mildew::Type with Mildew::Type::FETCH {
+lib/Mildew/Types.pm:122:class Mildew::Type::Prototype extends Mildew::Type {
+lib/Mildew/Types.pm:126:        my $id = Mildew::Type::str($call->identifier);
+lib/Mildew/Types.pm:134:class Mildew::Type::Scope extends Mildew::Type {
+lib/Mildew/Types.pm:137:    has outer=>(is=>'ro',isa=>'Type');
+lib/Mildew/Types.pm:155:                        && Mildew::Type::is_str($call->capture->positional->[0])
+lib/Mildew/Types.pm:157:                        my $name = Mildew::Type::str($call->capture->positional->[0]);
+lib/Mildew/Types.pm:158:                        if (Mildew::Type::str($call->identifier) eq 'postcircumfix:{ }') {
+lib/Mildew/Types.pm:160:                            $self->content->{$name} = Mildew::Type::Lexical->new();
+lib/Mildew/Types.pm:162:                        } elsif (Mildew::Type::str($call->identifier) eq 'lookup') {
+lib/Mildew/Types.pm:179:            return Mildew::Type::Unknown->new();
+lib/Mildew/Types.pm:186:            Mildew::Type::Unknown->new();
+lib/Mildew/Types.pm:195:        my $id = Mildew::Type::str($call->identifier);
+lib/Mildew/Types.pm:196:        if (($id eq 'lookup' || $id eq 'postcircumfix:{ }')  && Mildew::Type::is_str($call->capture->positional->[0])) {
+lib/Mildew/Types.pm:198:            $self->lookup(Mildew::Type::str($call->capture->positional->[0]));
+lib/Mildew/Types.pm:201:            Mildew::Type::Unknown->new();
+lib/Mildew/Types.pm:205:class Mildew::Type::Lexical extends Mildew::Type {
+lib/Mildew/Types.pm:209:    has content=>(is=>'rw',isa=>'Type',lazy_build=>1);
+lib/Mildew/Types.pm:210:    has binds=>(is=>'ro',isa=>'ArrayRef[Type]',default=>sub {[]});
+lib/Mildew/Types.pm:211:    has stores=>(is=>'ro',isa=>'ArrayRef[Type]',default=>sub {[]});
+lib/Mildew/Types.pm:220:            $container = Mildew::Type::Scalar->new();
+lib/Mildew/Types.pm:232:        if (Mildew::Type::str($call->rvalue->identifier) eq 'FETCH') {
+lib/Mildew/Types.pm:235:        } elsif (Mildew::Type::str($call->rvalue->identifier) eq 'BIND') {
+lib/Mildew/Types.pm:238:            Mildew::Type::Unknown->new();
+lib/Mildew/Types.pm:245:                my $id = Mildew::Type::str($call->identifier);
+lib/Mildew/Types.pm:268:class Mildew::Type::Scalar extends Mildew::Type {
+lib/Mildew/Types.pm:271:    has stores=>(is=>'ro',isa=>'ArrayRef[Type]',default=>sub {[]});
+lib/Mildew/Types.pm:284:            Mildew::Type::Unknown->new();
+lib/Mildew/Types.pm:288:        if (Mildew::Type::str($call->rvalue->identifier) eq 'FETCH') {
+lib/Mildew/Types.pm:291:            Mildew::Type::Unknown->new();
+lib/Mildew/Types.pm:295:        'Mildew::Type::Scalar of ' . ($self->has_content ? $self->content->pretty : '(not calculated yet value)');
+lib/Mildew/Types.pm:298:class Mildew::Type::Unknown extends Mildew::Type {
+lib/Mildew/Types.pm:301:class Mildew::Type::SelfRecursive extends Mildew::Type::Unknown {
+lib/Mildew/Types.pm:304:        Mildew::Type::SelfRecursive->new();
+lib/Mildew/Types.pm:308:class Mildew::Type::MildewSOLoader extends Mildew::Type {
+lib/Mildew/Types.pm:310:$Mildew::LexicalPreludeType = Mildew::Type::Scope->new(
+lib/Mildew/Types.pm:312:        MildewSOLoader => Mildew::Type::Lexical->new(content=>Mildew::Type::MildewSOLoader->new()),
+lib/Mildew/Types.pm:313:        Scalar => Mildew::Type::Prototype->new(type=>sub {Mildew::Type::Scalar->new()}),
+lib/Mildew/SSA.pm:6:use Mildew::Types;
+lib/Mildew/SSA.pm:57:    } elsif ($value->isa('AST::InferredTypeTest')) {
+lib/Mildew/SSA.pm:58:        AST::InferredTypeTest->new(value=>transform_stmt($callbacks,$value->value),test=>$value->test);
+lib/Mildew/SSA.pm:83:                } elsif ($stmt->rvalue->isa('AST::InferredTypeTest')) {
+lib/Mildew/SSA.pm:191:            type_info=>Mildew::TypeInfo->new($types->{$reg} ? (type=>$types->{$reg}) : () ),
+lib/Mildew/SSA.pm:227:                    $new_reg->type_info(Mildew::TypeInfo::FromAssignment->new(orgin=>$block->stmts->[0]));
+lib/Mildew/SSA.pm:242:                        $new_reg->type_info(Mildew::TypeInfo::External->new());
+lib/Mildew/SSA.pm:267:                    $stmt->lvalue->type_info(Mildew::TypeInfo::FromAssignment->new(orgin=>$stmt));
+lib/Mildew/Backend/Gtk.pm:4:use Mildew::Types;
+lib/Mildew/Backend/Gtk.pm:14:            '$scope' => Mildew::Type::Scope->new(outer=> $Mildew::LexicalPreludeType)
+lib/Mildew/Backend/Perlesque.pm:4:use Mildew::Types;
+lib/Mildew/Backend/Perlesque.pm:9:            '$scope' => Mildew::Type::Scope->new(outer=> $Mildew::LexicalPreludeType)
+lib/Mildew/Backend/Perlesque.pm:79:                    } elsif ($stmt->rvalue->isa('AST::InferredTypeTest')) {
+lib/Mildew/Backend/OptC.pm:4:use Mildew::Types;
+lib/Mildew/Backend/OptC.pm:39:            '$scope' => Mildew::Type::Scope->new(outer=> $Mildew::LexicalPreludeType)
+lib/Mildew/Backend/OptC.pm:56:            '$scope' => Mildew::Type::Scope->new(outer=> $Mildew::LexicalPreludeType)
+lib/Mildew/Backend/OptC.pm:170:                    } elsif ($stmt->rvalue->isa('AST::InferredTypeTest')) {
+lib/VAST/term__S_identifier.pm:11:                fcall '&ok' => [AST::InferredTypeTest->new(value=>$args[0],test=>$args[1]->value)]; 
+.build/EMIfgl6zUZ/lib/AST/InferredTypeTest.pm:3:class AST::InferredTypeTest extends AST::Base {
+.build/EMIfgl6zUZ/lib/AST/InferredTypeTest.pm:9:        ($ret,@setup,AST::Assign->new(lvalue=>$ret,rvalue=>AST::InferredTypeTest->new(value=>$value,test=>$self->test)));
+.build/EMIfgl6zUZ/lib/AST/IntegerConstant.pm:5:    has 'type_info' => (is=>'ro',lazy=>1,default=>sub {Mildew::TypeInfo::IntegerConstant->new()});
+.build/EMIfgl6zUZ/lib/AST/StringConstant.pm:5:    has 'type_info' => (is=>'ro',lazy=>1,default=>sub {Mildew::TypeInfo::StringConstant->new()});
+.build/EMIfgl6zUZ/lib/AST.pm:55:use AST::InferredTypeTest;
+.build/EMIfgl6zUZ/lib/Mildew/Types.pm:4:class Mildew::TypeInfo {
+.build/EMIfgl6zUZ/lib/Mildew/Types.pm:12:        Mildew::Type::Unknown->new();
+.build/EMIfgl6zUZ/lib/Mildew/Types.pm:16:class Mildew::TypeInfo::FromAssignment extends Mildew::TypeInfo {
+.build/EMIfgl6zUZ/lib/Mildew/Types.pm:19:        $self->type(Mildew::Type::SelfRecursive->new());
+.build/EMIfgl6zUZ/lib/Mildew/Types.pm:29:            Mildew::Type::Unknown->new();
+.build/EMIfgl6zUZ/lib/Mildew/Types.pm:33:class Mildew::TypeInfo::Phi extends Mildew::TypeInfo {
+.build/EMIfgl6zUZ/lib/Mildew/Types.pm:35:class Mildew::TypeInfo::IntegerConstant extends Mildew::TypeInfo {
+.build/EMIfgl6zUZ/lib/Mildew/Types.pm:37:        Mildew::Type::IntegerConstant->new();
+.build/EMIfgl6zUZ/lib/Mildew/Types.pm:40:class Mildew::TypeInfo::StringConstant extends Mildew::TypeInfo {
+.build/EMIfgl6zUZ/lib/Mildew/Types.pm:42:class Mildew::TypeInfo::External extends Mildew::TypeInfo {
+.build/EMIfgl6zUZ/lib/Mildew/Types.pm:44:class Mildew::Type {
+.build/EMIfgl6zUZ/lib/Mildew/Types.pm:56:        Mildew::Type::Unknown->new();
+.build/EMIfgl6zUZ/lib/Mildew/Types.pm:109:role Mildew::Type::FETCH {
+.build/EMIfgl6zUZ/lib/Mildew/Types.pm:112:        my $id = Mildew::Type::str($call->identifier);
+.build/EMIfgl6zUZ/lib/Mildew/Types.pm:116:            Mildew::Type::Unknown->new();
+.build/EMIfgl6zUZ/lib/Mildew/Types.pm:120:class Mildew::Type::IntegerConstant extends Mildew::Type with Mildew::Type::FETCH {
+.build/EMIfgl6zUZ/lib/Mildew/Types.pm:122:class Mildew::Type::Prototype extends Mildew::Type {
+.build/EMIfgl6zUZ/lib/Mildew/Types.pm:126:        my $id = Mildew::Type::str($call->identifier);
+.build/EMIfgl6zUZ/lib/Mildew/Types.pm:134:class Mildew::Type::Scope extends Mildew::Type {
+.build/EMIfgl6zUZ/lib/Mildew/Types.pm:137:    has outer=>(is=>'ro',isa=>'Type');
+.build/EMIfgl6zUZ/lib/Mildew/Types.pm:155:                        && Mildew::Type::is_str($call->capture->positional->[0])
+.build/EMIfgl6zUZ/lib/Mildew/Types.pm:157:                        my $name = Mildew::Type::str($call->capture->positional->[0]);
+.build/EMIfgl6zUZ/lib/Mildew/Types.pm:158:                        if (Mildew::Type::str($call->identifier) eq 'postcircumfix:{ }') {
+.build/EMIfgl6zUZ/lib/Mildew/Types.pm:160:                            $self->content->{$name} = Mildew::Type::Lexical->new();
+.build/EMIfgl6zUZ/lib/Mildew/Types.pm:162:                        } elsif (Mildew::Type::str($call->identifier) eq 'lookup') {
+.build/EMIfgl6zUZ/lib/Mildew/Types.pm:179:            return Mildew::Type::Unknown->new();
+.build/EMIfgl6zUZ/lib/Mildew/Types.pm:186:            Mildew::Type::Unknown->new();
+.build/EMIfgl6zUZ/lib/Mildew/Types.pm:195:        my $id = Mildew::Type::str($call->identifier);
+.build/EMIfgl6zUZ/lib/Mildew/Types.pm:196:        if (($id eq 'lookup' || $id eq 'postcircumfix:{ }')  && Mildew::Type::is_str($call->capture->positional->[0])) {
+.build/EMIfgl6zUZ/lib/Mildew/Types.pm:198:            $self->lookup(Mildew::Type::str($call->capture->positional->[0]));
+.build/EMIfgl6zUZ/lib/Mildew/Types.pm:201:            Mildew::Type::Unknown->new();
+.build/EMIfgl6zUZ/lib/Mildew/Types.pm:205:class Mildew::Type::Lexical extends Mildew::Type {
+.build/EMIfgl6zUZ/lib/Mildew/Types.pm:209:    has content=>(is=>'rw',isa=>'Type',lazy_build=>1);
+.build/EMIfgl6zUZ/lib/Mildew/Types.pm:210:    has binds=>(is=>'ro',isa=>'ArrayRef[Type]',default=>sub {[]});
+.build/EMIfgl6zUZ/lib/Mildew/Types.pm:211:    has stores=>(is=>'ro',isa=>'ArrayRef[Type]',default=>sub {[]});
+.build/EMIfgl6zUZ/lib/Mildew/Types.pm:220:            $container = Mildew::Type::Scalar->new();
+.build/EMIfgl6zUZ/lib/Mildew/Types.pm:232:        if (Mildew::Type::str($call->rvalue->identifier) eq 'FETCH') {
+.build/EMIfgl6zUZ/lib/Mildew/Types.pm:235:        } elsif (Mildew::Type::str($call->rvalue->identifier) eq 'BIND') {
+.build/EMIfgl6zUZ/lib/Mildew/Types.pm:238:            Mildew::Type::Unknown->new();
+.build/EMIfgl6zUZ/lib/Mildew/Types.pm:245:                my $id = Mildew::Type::str($call->identifier);
+.build/EMIfgl6zUZ/lib/Mildew/Types.pm:268:class Mildew::Type::Scalar extends Mildew::Type {
+.build/EMIfgl6zUZ/lib/Mildew/Types.pm:271:    has stores=>(is=>'ro',isa=>'ArrayRef[Type]',default=>sub {[]});
+.build/EMIfgl6zUZ/lib/Mildew/Types.pm:284:            Mildew::Type::Unknown->new();
+.build/EMIfgl6zUZ/lib/Mildew/Types.pm:288:        if (Mildew::Type::str($call->rvalue->identifier) eq 'FETCH') {
+.build/EMIfgl6zUZ/lib/Mildew/Types.pm:291:            Mildew::Type::Unknown->new();
+.build/EMIfgl6zUZ/lib/Mildew/Types.pm:295:        'Mildew::Type::Scalar of ' . ($self->has_content ? $self->content->pretty : '(not calculated yet value)');
+.build/EMIfgl6zUZ/lib/Mildew/Types.pm:298:class Mildew::Type::Unknown extends Mildew::Type {
+.build/EMIfgl6zUZ/lib/Mildew/Types.pm:301:class Mildew::Type::SelfRecursive extends Mildew::Type::Unknown {
+.build/EMIfgl6zUZ/lib/Mildew/Types.pm:304:        Mildew::Type::SelfRecursive->new();
+.build/EMIfgl6zUZ/lib/Mildew/Types.pm:308:class Mildew::Type::MildewSOLoader extends Mildew::Type {
+.build/EMIfgl6zUZ/lib/Mildew/Types.pm:310:$Mildew::LexicalPreludeType = Mildew::Type::Scope->new(
+.build/EMIfgl6zUZ/lib/Mildew/Types.pm:312:        MildewSOLoader => Mildew::Type::Lexical->new(content=>Mildew::Type::MildewSOLoader->new()),
+.build/EMIfgl6zUZ/lib/Mildew/Types.pm:313:        Scalar => Mildew::Type::Prototype->new(type=>sub {Mildew::Type::Scalar->new()}),
+.build/EMIfgl6zUZ/lib/Mildew/SSA.pm:6:use Mildew::Types;
+.build/EMIfgl6zUZ/lib/Mildew/SSA.pm:57:    } elsif ($value->isa('AST::InferredTypeTest')) {
+.build/EMIfgl6zUZ/lib/Mildew/SSA.pm:58:        AST::InferredTypeTest->new(value=>transform_stmt($callbacks,$value->value),test=>$value->test);
+.build/EMIfgl6zUZ/lib/Mildew/SSA.pm:83:                } elsif ($stmt->rvalue->isa('AST::InferredTypeTest')) {
+.build/EMIfgl6zUZ/lib/Mildew/SSA.pm:191:            type_info=>Mildew::TypeInfo->new($types->{$reg} ? (type=>$types->{$reg}) : () ),
+.build/EMIfgl6zUZ/lib/Mildew/SSA.pm:227:                    $new_reg->type_info(Mildew::TypeInfo::FromAssignment->new(orgin=>$block->stmts->[0]));
+.build/EMIfgl6zUZ/lib/Mildew/SSA.pm:242:                        $new_reg->type_info(Mildew::TypeInfo::External->new());
+.build/EMIfgl6zUZ/lib/Mildew/SSA.pm:267:                    $stmt->lvalue->type_info(Mildew::TypeInfo::FromAssignment->new(orgin=>$stmt));
+.build/EMIfgl6zUZ/lib/Mildew/Backend/Gtk.pm:4:use Mildew::Types;
+.build/EMIfgl6zUZ/lib/Mildew/Backend/Gtk.pm:14:            '$scope' => Mildew::Type::Scope->new(outer=> $Mildew::LexicalPreludeType)
+.build/EMIfgl6zUZ/lib/Mildew/Backend/Perlesque.pm:4:use Mildew::Types;
+.build/EMIfgl6zUZ/lib/Mildew/Backend/Perlesque.pm:9:            '$scope' => Mildew::Type::Scope->new(outer=> $Mildew::LexicalPreludeType)
+.build/EMIfgl6zUZ/lib/Mildew/Backend/Perlesque.pm:79:                    } elsif ($stmt->rvalue->isa('AST::InferredTypeTest')) {
+.build/EMIfgl6zUZ/lib/Mildew/Backend/OptC.pm:4:use Mildew::Types;
+.build/EMIfgl6zUZ/lib/Mildew/Backend/OptC.pm:39:            '$scope' => Mildew::Type::Scope->new(outer=> $Mildew::LexicalPreludeType)
+.build/EMIfgl6zUZ/lib/Mildew/Backend/OptC.pm:56:            '$scope' => Mildew::Type::Scope->new(outer=> $Mildew::LexicalPreludeType)
+.build/EMIfgl6zUZ/lib/Mildew/Backend/OptC.pm:170:                    } elsif ($stmt->rvalue->isa('AST::InferredTypeTest')) {
+.build/EMIfgl6zUZ/lib/VAST/term__S_identifier.pm:11:                fcall '&ok' => [AST::InferredTypeTest->new(value=>$args[0],test=>$args[1]->value)]; 
+.build/EMIfgl6zUZ/Makefile:204:	lib/AST/InferredTypeTest.pm \
+.build/EMIfgl6zUZ/Makefile:229:	lib/Mildew/Types.pm \
+.build/EMIfgl6zUZ/Makefile:305:	lib/AST/InferredTypeTest.pm \
+.build/EMIfgl6zUZ/Makefile:306:	blib/lib/AST/InferredTypeTest.pm \
+.build/EMIfgl6zUZ/Makefile:371:	lib/Mildew/Types.pm \
+.build/EMIfgl6zUZ/Makefile:372:	blib/lib/Mildew/Types.pm \
+.build/EMIfgl6zUZ/Makefile:1154:	  lib/AST/InferredTypeTest.pm blib/lib/AST/InferredTypeTest.pm \
+.build/EMIfgl6zUZ/Makefile:1187:	  lib/Mildew/Types.pm blib/lib/Mildew/Types.pm \

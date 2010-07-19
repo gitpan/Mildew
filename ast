@@ -1,0 +1,1243 @@
+replace:2:s/AST/AST::/g;
+bin/mildew:123:                require Mildew::Backend::DumpAST;
+bin/mildew:124:                return Mildew::Backend::DumpAST->new(format=>$backend);
+lib/Mildew/AST/Assign.pm:3:class AST::Assign extends AST::Base {
+lib/Mildew/AST/Assign.pm:17:        ($self->lvalue,@setup,AST::Assign->new(lvalue=>$self->lvalue,rvalue=>$rvalue));
+lib/Mildew/AST/Capture.pm:3:class AST::Capture extends AST::Base {
+lib/Mildew/AST/Capture.pm:4:    has 'invocant' => (is=>'ro',isa=>'AST::Base');
+lib/Mildew/AST/Capture.pm:5:    has 'positional' => (is=>'ro',default=>sub {[]},isa=>'ArrayRef[AST::Base]');
+lib/Mildew/AST/Capture.pm:6:    has 'named' => (is=>'ro',default=>sub {[]},isa=>'ArrayRef[AST::Base]');
+lib/Mildew/AST/Block.pm:1:class AST::Block extends AST::Base {
+lib/Mildew/AST/Block.pm:2:    has 'stmts' => (is=>'ro',isa=>'ArrayRef[AST::Base]');
+lib/Mildew/AST/Block.pm:12:        "mold \{\n". AST::indent(
+lib/Mildew/AST/Block.pm:14:            . join("",map {AST::terminate_stmt  $_->pretty } @{$self->stmts})
+lib/Mildew/AST/Block.pm:25:        AST::Block::Simplified->new(regs=>$self->regs,stmts=>[@stmts,$value ? ($value) : ()]);
+lib/Mildew/AST/Comment.pm:3:class AST::Comment extends AST::Base {
+lib/Mildew/AST/Branch.pm:3:class AST::Branch extends AST::Base {
+lib/Mildew/AST/Branch.pm:19:        (AST::Branch->new(cond=>$cond,then=>$self->then,else=>$self->else,@setup));
+lib/Mildew/AST/Goto.pm:3:class AST::Goto extends AST::Base {
+lib/Mildew/AST/If.pm:3:class AST::If extends AST::Base {
+lib/Mildew/AST/If.pm:4:    use AST::Helpers;
+lib/Mildew/AST/If.pm:10:        my $id_cond = AST::unique_id;
+lib/Mildew/AST/If.pm:11:        my $label_then = AST::unique_label;
+lib/Mildew/AST/If.pm:12:        my $label_else = AST::unique_label;
+lib/Mildew/AST/If.pm:13:        my $label_endif = AST::unique_label;
+lib/Mildew/AST/If.pm:24:                my $id_elsif_cond = AST::unique_id;
+lib/Mildew/AST/If.pm:25:                my $label_elsif_then = AST::unique_label;
+lib/Mildew/AST/If.pm:26:                my $label_elsif_else = AST::unique_label;
+lib/Mildew/AST/If.pm:55:        my $endif = AST::Seq->new(stmts=>[],id=>AST::unique_label);
+lib/Mildew/AST/If.pm:56:        my $result = AST::unique_reg;
+lib/Mildew/AST/If.pm:65:            my $then = AST::Seq->new(id=>AST::unique_label,stmts=>[@then_setup,AST::Assign->new(lvalue=>$result,rvalue=>$then_val),AST::Goto->new(block=>$endif)]);
+lib/Mildew/AST/If.pm:66:            $branch = AST::Branch->new(cond=>$cond,then=>$then);
+lib/Mildew/AST/If.pm:67:            my $block = AST::Seq->new(id=>AST::unique_label,stmts=>[@cond_setup,$branch,$then]);
+lib/Mildew/AST/If.pm:74:            my $else = AST::Seq->new(id=>AST::unique_label,stmts=>[@else_setup,AST::Assign->new(lvalue=>$result,rvalue=>$else_val),AST::Goto->new(block=>$endif)]);
+lib/Mildew/AST/If.pm:88:                . AST::indent($self->then->pretty) . "\n"
+lib/Mildew/AST/If.pm:93:                . AST::indent($self->else->pretty) . "\n"
+lib/Mildew/AST/If.pm:100:                    . AST::indent($self->then->pretty). "\n"
+lib/Mildew/AST/If.pm:107:                . AST::indent($self->else->pretty). "\n"
+lib/Mildew/AST/Base.pm:4:class AST::Base {
+lib/Mildew/AST/While.pm:3:class AST::While extends AST::Base {
+lib/Mildew/AST/While.pm:4:    use AST::Helpers;
+lib/Mildew/AST/While.pm:9:        my $id_cond = AST::unique_id;
+lib/Mildew/AST/While.pm:10:        my $start = AST::unique_label;
+lib/Mildew/AST/While.pm:11:        my $label_start = AST::unique_label;
+lib/Mildew/AST/While.pm:12:        my $label_end = AST::unique_label;
+lib/Mildew/AST/While.pm:13:        my $label_body = AST::unique_label;
+lib/Mildew/AST/While.pm:26:        . AST::indent($self->body->pretty) . "\n"
+lib/Mildew/AST/While.pm:35:        my $branch = AST::Branch->new(cond=>$cond);
+lib/Mildew/AST/While.pm:37:        my $cond_block = AST::Seq->new(id=>AST::unique_label,stmts=>[@cond_setup,$branch]);
+lib/Mildew/AST/While.pm:38:        my $body = AST::Seq->new(id=>AST::unique_label,stmts=>[
+lib/Mildew/AST/While.pm:40:            AST::Goto->new(block=>$cond_block)
+lib/Mildew/AST/While.pm:43:        my $end = AST::Seq->new(id=>AST::unique_label,stmts=>[]);
+lib/Mildew/AST/Reg.pm:3:class AST::Reg extends AST::Base {
+lib/Mildew/AST/Let.pm:3:class AST::Let extends AST::Base {
+lib/Mildew/AST/Let.pm:7:        my $id = AST::unique_id;
+lib/Mildew/AST/Let.pm:8:        $self->value->m0ld($id) . $self->block->(AST::Reg->new(name=>$id))->m0ld($ret);
+lib/Mildew/AST/Let.pm:11:        my $id = AST::unique_id;
+lib/Mildew/AST/Let.pm:12:        "do {\n". AST::indent('my ' . $id . ' = ' . $self->value->pretty . ";\n"
+lib/Mildew/AST/Let.pm:13:        . $self->block->(AST::Reg->new(name => $id))->pretty) . '}';
+lib/Mildew/AST/Pair.pm:3:class AST::Pair extends AST::Base {
+lib/Mildew/AST/InferredTypeTest.pm:3:class AST::InferredTypeTest extends AST::Base {
+lib/Mildew/AST/InferredTypeTest.pm:8:        my $ret = AST::unique_reg;
+lib/Mildew/AST/InferredTypeTest.pm:9:        ($ret,@setup,AST::Assign->new(lvalue=>$ret,rvalue=>AST::InferredTypeTest->new(value=>$value,test=>$self->test)));
+lib/Mildew/AST/Helpers.pm:1:package AST::Helpers;
+lib/Mildew/AST/Helpers.pm:17:    AST::StringConstant->new(value=>$_[0]);
+lib/Mildew/AST/Helpers.pm:21:    AST::Reg->new(name=>$_[0]);
+lib/Mildew/AST/Helpers.pm:25:    AST::IntegerConstant->new(value=>$_[0]);
+lib/Mildew/AST/Helpers.pm:30:    AST::Call->new(identifier=>string($_[0]),capture=>AST::Capture->new(invocant => $_[1],positional => $_[2]//[],named => $_[3]//[]));
+lib/Mildew/AST/Helpers.pm:60:    AST::Call->new(
+lib/Mildew/AST/Helpers.pm:62:        capture => AST::Capture->new(
+lib/Mildew/AST/Helpers.pm:73:    AST::Let->new(value=>$value,block=>sub { local $Mildew::adhoc_sig = $adhoc_sig;$block->(@_)});
+lib/Mildew/AST/Helpers.pm:77:  AST::Call->new
+lib/Mildew/AST/Helpers.pm:79:      capture => AST::Capture->new
+lib/Mildew/AST/Helpers.pm:83:        [ string 'BIND' => AST::Block->new
+lib/Mildew/AST/Helpers.pm:89:  AST::Call->new
+lib/Mildew/AST/Helpers.pm:91:      capture => AST::Capture->new
+lib/Mildew/AST/Helpers.pm:95:        [ string 'BIND' => AST::Block->new
+lib/Mildew/AST/Helpers.pm:116:	    AST::Block->new
+lib/Mildew/AST/Helpers.pm:154:        if (defined $sc && ($sc->isa('VAST::statement_control__S_CATCH') || $sc->isa('VAST::statement_control__S_CONTROL'))) {
+lib/Mildew/AST/Helpers.pm:201:    [grep { ref $_ ne 'AST::Pair' } @_],[map { $_->key, $_->value } grep { ref eq 'AST::Pair' } @_]
+lib/Mildew/AST/Helpers.pm:215:    AST::Block->new(regs=>['interpreter','scope'],stmts=>trailing_return([fcall(call(new => FETCH(lookup('Code')),[],[string 'outer'=>($scope // reg '$scope'),string 'signature'=>empty_sig(),string 'mold' => $ast]))]));
+lib/Mildew/AST/Phi.pm:4:class AST::Phi extends AST::Base {
+lib/Mildew/AST/Call.pm:3:class AST::Call extends AST::Base {
+lib/Mildew/AST/Call.pm:5:    use AST::Helpers qw(YYY);
+lib/Mildew/AST/Call.pm:13:            push (@args,AST::Named->new(key=>shift @named,value=>shift @named));
+lib/Mildew/AST/Call.pm:18:        if ($self->capture->isa("AST::Capture")) {
+lib/Mildew/AST/Call.pm:19:            my $invocant = AST::unique_id;
+lib/Mildew/AST/Call.pm:20:            my $identifier = AST::unique_id;
+lib/Mildew/AST/Call.pm:25:                my $id = AST::unique_id;
+lib/Mildew/AST/Call.pm:32:                my $key = AST::unique_id;
+lib/Mildew/AST/Call.pm:33:                my $value =  AST::unique_id;
+lib/Mildew/AST/Call.pm:50:        if ($self->capture->isa("AST::Capture")) {
+lib/Mildew/AST/Call.pm:70:            my $reg = AST::unique_reg;
+lib/Mildew/AST/Call.pm:71:            ($reg,@invocant_setup,@identifier_setup,@setup_args,AST::Assign->new(lvalue=>$reg,rvalue=>
+lib/Mildew/AST/Call.pm:72:                AST::Call->new(identifier=>$identifier,capture=>AST::Capture->new(
+lib/Mildew/AST/Call.pm:85:        if ($self->identifier->isa("AST::StringConstant")) {
+lib/Mildew/AST/Call.pm:98:        if ($self->capture->isa("AST::Capture")) {
+lib/Mildew/AST/Loop.pm:3:class AST::Loop extends AST::Base {
+lib/Mildew/AST/Loop.pm:6:        my $label = AST::unique_label;
+lib/Mildew/AST/Loop.pm:11:        my $goto = AST::Goto->new();
+lib/Mildew/AST/Loop.pm:13:        my $block = AST::Seq->new(id=>AST::unique_label,stmts=>[@setup,$goto]);
+lib/Mildew/AST/Loop.pm:19:        . AST::indent($self->code->pretty) . "\n"
+lib/Mildew/AST/Block/SSA.pm:4:class AST::Block::SSA extends AST::Block {
+lib/Mildew/AST/Block/Simplified.pm:4:class AST::Block::Simplified extends AST::Block {
+lib/Mildew/AST/IntegerConstant.pm:3:class AST::IntegerConstant extends AST::Base {
+lib/Mildew/AST/StringConstant.pm:3:class AST::StringConstant extends AST::Base {;
+lib/Mildew/AST/Seq.pm:1:class AST::Seq extends AST::Base {
+lib/Mildew/AST/Seq.pm:7:        . join("",map {AST::terminate_stmt $_->pretty} @{$self->stmts});
+lib/Mildew/AST/Seq.pm:12:        my $m0ld = join('',map {$_->m0ld(AST::unique_id)} @stmts);
+lib/Mildew/AST/Seq.pm:29:        if (defined $last && $last->isa('AST::Goto')) {
+lib/Mildew/AST/Seq.pm:31:        } elsif (defined $last && $last->isa('AST::Branch')) {
+lib/Mildew/Types.pm:6:    has mold=>(is=>'rw',isa=>'AST::Block::SSA');
+lib/Mildew/Types.pm:7:    has usage=>(is=>'ro',isa=>'ArrayRef[AST::Base]',default=>sub {[]});
+lib/Mildew/Types.pm:17:    has orgin=>(is=>'ro',isa=>'AST::Base',required=>1);
+lib/Mildew/Types.pm:21:        if ($rvalue->isa('AST::Call')) {
+lib/Mildew/Types.pm:51:        defined $value && $value->isa('AST::StringConstant');
+lib/Mildew/Types.pm:81:        my $perlesque_capture = AST::unique_id();
+lib/Mildew/Types.pm:136:    has reg=>(is=>'rw',isa=>'AST::Reg');
+lib/Mildew/Types.pm:150:            if ($stmt->rvalue->isa('AST::Call')) {
+lib/Mildew/Types.pm:242:        if ($usage->isa('AST::Assign')) {
+lib/Mildew/Types.pm:244:            if ($call->isa('AST::Call') && (refaddr $call->capture->invocant == refaddr $reg)) {
+lib/Mildew/Compiler.pm:3:use AST;
+lib/Mildew/Compiler.pm:4:use VAST;
+lib/Mildew/Compiler.pm:6:    for (<src/VAST/*.pm>) {
+lib/Mildew/Compiler.pm:11:    use AST::Helpers;
+lib/Mildew/Frontend/M0ld.pm:4:use AST;
+lib/Mildew/Frontend/M0ld.pm:9:    # converts an arrayref of statements to a AST::Block
+lib/Mildew/Frontend/M0ld.pm:20:                $seqs{$label} = AST::Seq->new(stmts=>[],id=>$label);
+lib/Mildew/Frontend/M0ld.pm:31:                push(@seqs,AST::Seq->new(stmts=>[])) if $stmt;
+lib/Mildew/Frontend/M0ld.pm:35:                push(@{$seqs[-1]->stmts},AST::Goto->new(block=>$seqs{$stmt->{goto}}));
+lib/Mildew/Frontend/M0ld.pm:37:                push(@{$seqs[-1]->stmts},AST::Branch->new(
+lib/Mildew/Frontend/M0ld.pm:47:        AST::Block::Simplified->new(stmts=>\@seqs,regs=>$REGS);
+lib/Mildew/Frontend/M0ld.pm:80:        $MATCH = AST::Call->new(
+lib/Mildew/Frontend/M0ld.pm:82:            capture=>AST::Capture->new(
+lib/Mildew/Frontend/M0ld.pm:84:                positional => [grep { ! $_->isa('AST::Pair') } @{$MATCH{argument}}],
+lib/Mildew/Frontend/M0ld.pm:85:                named => [map { $_->key, $_->value } grep { $_->isa('AST::Pair') } @{$MATCH{argument}}]
+lib/Mildew/Frontend/M0ld.pm:92:    (?{ $MATCH = AST::Assign->new(lvalue=>$MATCH{register},rvalue=>$MATCH{rvalue}) })
+lib/Mildew/Frontend/M0ld.pm:105:    (?{$MATCH = AST::Pair->new(key=>$MATCH{key},value=>$MATCH{val})})
+lib/Mildew/Frontend/M0ld.pm:128:    (?{$MATCH = AST::IntegerConstant->new(value=>$+)})
+lib/Mildew/Frontend/M0ld.pm:132:    (?{$MATCH = AST::Reg->new(name=>$+)})
+lib/Mildew/Frontend/M0ld.pm:140:    (?{$MATCH = AST::StringConstant->new(value=>join('',@{$MATCH{string_part}}))})
+lib/Mildew/Frontend/STD/Cached.pm:20:            # generating the missing VAST classes
+lib/Mildew/Frontend/STD/Cached.pm:28:            return $parse->{VAST};
+lib/Mildew/Frontend/STD/Cached.pm:31:        # we need to duplicate the calls to gen_class before we can use the AST
+lib/Mildew/Frontend/STD/Cached.pm:45:        $self->cache->set($checksum,{ORIG=>$::ORIG,VAST=>$vast,gen_class=>\@gen_class});
+lib/Mildew/SSA.pm:46:    if ($value->isa('AST::Call')) {
+lib/Mildew/SSA.pm:47:        AST::Call->new(identifier=>transform_stmt($callbacks,$value->identifier),capture=>transform_stmt($callbacks,$value->capture));
+lib/Mildew/SSA.pm:48:    } elsif ($value->isa('AST::Capture')) {
+lib/Mildew/SSA.pm:49:        AST::Capture->new(
+lib/Mildew/SSA.pm:55:    } elsif ($value->isa('AST::Assign')) {
+lib/Mildew/SSA.pm:56:        AST::Assign->new(lvalue=>transform_stmt($callbacks,$value->lvalue),rvalue=>transform_stmt($callbacks,$value->rvalue));
+lib/Mildew/SSA.pm:57:    } elsif ($value->isa('AST::InferredTypeTest')) {
+lib/Mildew/SSA.pm:58:        AST::InferredTypeTest->new(value=>transform_stmt($callbacks,$value->value),test=>$value->test);
+lib/Mildew/SSA.pm:59:    } elsif ($value->isa('AST::Branch')) {
+lib/Mildew/SSA.pm:60:        AST::Branch->new(then=>$value->then,else=>$value->else,cond=>transform_stmt($callbacks,$value->cond));
+lib/Mildew/SSA.pm:77:        my $insert = sub {$alive_regs{$block}->insert(map {$_->name} grep {$_->isa('AST::Reg')} @_)};
+lib/Mildew/SSA.pm:79:            if ($stmt->isa('AST::Assign')) {
+lib/Mildew/SSA.pm:80:                if ($stmt->rvalue->isa('AST::Call')) {
+lib/Mildew/SSA.pm:83:                } elsif ($stmt->rvalue->isa('AST::InferredTypeTest')) {
+lib/Mildew/SSA.pm:88:            } elsif ($stmt->isa('AST::Branch')) {
+lib/Mildew/SSA.pm:89:                $alive_regs{$block}->insert($stmt->cond->name) if $stmt->cond->isa('AST::Reg');
+lib/Mildew/SSA.pm:190:        $regs{$blocks->[0]}{$reg} = AST::Reg->new(
+lib/Mildew/SSA.pm:199:            if ($stmt->isa('AST::Assign')) {
+lib/Mildew/SSA.pm:201:                my $reg = AST::Reg->new(
+lib/Mildew/SSA.pm:206:                $stmt = AST::Assign->new(lvalue=>$reg,rvalue=>$stmt->rvalue);
+lib/Mildew/SSA.pm:223:                    my $new_reg = AST::Reg->new(name=>$reg."_".++$unique{$reg},real_name=>$reg);
+lib/Mildew/SSA.pm:225:                    unshift @{$block->stmts},AST::Assign->new(lvalue=>$new_reg,rvalue=>AST::Phi->new(regs=>\@phi));
+lib/Mildew/SSA.pm:236:                'AST::Reg'   => sub {
+lib/Mildew/SSA.pm:241:                        my $new_reg = AST::Reg->new(real_name=>$reg->name,name=>$reg->name);
+lib/Mildew/SSA.pm:252:                'AST::Block' => sub {
+lib/Mildew/SSA.pm:266:            if ($stmt->isa('AST::Assign')) {
+lib/Mildew/SSA.pm:273:            if ($stmt->isa('AST::Assign')) {
+lib/Mildew/SSA.pm:274:                if ($stmt->rvalue->isa('AST::Call')) {
+lib/Mildew/SSA.pm:277:                        next unless $reg->isa('AST::Reg');
+lib/Mildew/SSA.pm:297:    AST::Block::SSA->new(regs=>$mold->regs,stmts=>\@blocks); 
+lib/Mildew/SSA.pm:304:            if ($_->isa('AST::Assign') && $_->rvalue->isa('AST::Phi')) {
+lib/Mildew/SSA.pm:318:                'AST::Reg' => sub {
+lib/Mildew/SSA.pm:320:                    $unssa{$reg} ? AST::Reg->new(name=>$reg->real_name) : $reg;
+lib/Mildew/SSA.pm:322:                'AST::Block' => sub {
+lib/Mildew/SSA.pm:355:            if ($stmt->isa('AST::Goto')) {
+lib/Mildew/SSA.pm:357:            } elsif ($stmt->isa('AST::Branch')) {
+lib/Mildew/SSA.pm:367:        if ($_->isa('AST::Seq')) {
+lib/Mildew/SSA.pm:369:                my $block = AST::Seq->new(stmts=>[],id=>$_->id);
+lib/Mildew/SSA.pm:376:                push (@{$blocks},AST::Seq->new(stmts=>[],id=>'start'));
+lib/Mildew/AST.pm:5:package AST;
+lib/Mildew/AST.pm:11:    AST::Reg->new(name=>unique_id);
+lib/Mildew/AST.pm:36:use AST::Base;
+lib/Mildew/AST.pm:37:use AST::Call;
+lib/Mildew/AST.pm:38:use AST::If;
+lib/Mildew/AST.pm:39:use AST::Let;
+lib/Mildew/AST.pm:40:use AST::Assign;
+lib/Mildew/AST.pm:41:use AST::Helpers;
+lib/Mildew/AST.pm:42:use AST::Comment;
+lib/Mildew/AST.pm:43:use AST::While;
+lib/Mildew/AST.pm:44:use AST::Pair;
+lib/Mildew/AST.pm:45:use AST::IntegerConstant;
+lib/Mildew/AST.pm:46:use AST::StringConstant;
+lib/Mildew/AST.pm:47:use AST::Branch;
+lib/Mildew/AST.pm:48:use AST::Reg;
+lib/Mildew/AST.pm:49:use AST::Capture;
+lib/Mildew/AST.pm:50:use AST::Goto;
+lib/Mildew/AST.pm:51:use AST::Block;
+lib/Mildew/AST.pm:52:use AST::Block::SSA;
+lib/Mildew/AST.pm:53:use AST::Seq;
+lib/Mildew/AST.pm:54:use AST::Loop;
+lib/Mildew/AST.pm:55:use AST::InferredTypeTest;
+lib/Mildew/AST.pm:56:use AST::Phi;
+lib/Mildew/AST.pm:57:use AST::Block::Simplified;
+lib/Mildew/Backend/Gtk.pm:31:This backend displays the AST using Forest::Gtk2
+lib/Mildew/Backend/Perlesque.pm:19:            if ($_[0]->isa('AST::Reg')) {
+lib/Mildew/Backend/Perlesque.pm:22:            } elsif ($_[0]->isa('AST::IntegerConstant')) {
+lib/Mildew/Backend/Perlesque.pm:24:            } elsif ($_[0]->isa('AST::StringConstant')) {
+lib/Mildew/Backend/Perlesque.pm:34:#            if ($_[0]->isa('AST::Reg')) {
+lib/Mildew/Backend/Perlesque.pm:44:#            } elsif ($_[0]->isa('AST::Block::SSA')) {
+lib/Mildew/Backend/Perlesque.pm:58:                if ($stmt->isa('AST::Goto')) {
+lib/Mildew/Backend/Perlesque.pm:61:                } elsif ($stmt->isa('AST::Branch')) {
+lib/Mildew/Backend/Perlesque.pm:70:                } elsif ($stmt->isa('AST::Reg')) {
+lib/Mildew/Backend/Perlesque.pm:72:                } elsif ($stmt->isa('AST::Assign')) {
+lib/Mildew/Backend/Perlesque.pm:73:                    if ($stmt->rvalue->isa('AST::Call')) {
+lib/Mildew/Backend/Perlesque.pm:77:                    } elsif ($stmt->rvalue->isa('AST::Phi')) {
+lib/Mildew/Backend/Perlesque.pm:79:                    } elsif ($stmt->rvalue->isa('AST::InferredTypeTest')) {
+lib/Mildew/Backend/Perlesque.pm:82:                        #$code .= Emit::Yeast::assign($value->($stmt->lvalue),$value->(AST::IntegerConstant->new(value=>eval($stmt->rvalue->test) ? 1 : 0)));
+lib/Mildew/Backend/DumpAST.pm:3:class Mildew::Backend::DumpAST with Mildew::Backend {
+lib/Mildew/Backend/DumpAST.pm:17:Mildew::Backend::DumpAST
+lib/Mildew/Backend/DumpAST.pm:21:This backend prints out the AST in a format specified by the closure.
+lib/Mildew/Backend/C/So.pm:7:    use AST;
+lib/Mildew/Backend/C/So.pm:8:    use AST::Helpers;
+lib/Mildew/Backend/C/So.pm:27:        AST::Block->new(
+lib/Mildew/Backend/C/So.pm:30:                    AST::Assign->new(lvalue=>reg '$YOU_ARE_HERE',rvalue=>reg '$scope'),
+lib/Mildew/Backend/OptC.pm:89:            if ($_[0]->isa('AST::Reg')) {
+lib/Mildew/Backend/OptC.pm:99:            } elsif ($_[0]->isa('AST::StringConstant')) {
+lib/Mildew/Backend/OptC.pm:105:            } elsif ($_[0]->isa('AST::IntegerConstant')) {
+lib/Mildew/Backend/OptC.pm:107:            } elsif ($_[0]->isa('AST::Block::SSA')) {
+lib/Mildew/Backend/OptC.pm:123:                if ($stmt->isa('AST::Assign')) {
+lib/Mildew/Backend/OptC.pm:125:                    if ($stmt->rvalue->isa('AST::Call') && defined $Mildew::profile_info) {
+lib/Mildew/Backend/OptC.pm:145:                if ($stmt->isa('AST::Goto')) {
+lib/Mildew/Backend/OptC.pm:147:                } elsif ($stmt->isa('AST::Branch')) {
+lib/Mildew/Backend/OptC.pm:155:                } elsif ($stmt->isa('AST::Reg')) {
+lib/Mildew/Backend/OptC.pm:158:                } elsif ($stmt->isa('AST::Assign')) {
+lib/Mildew/Backend/OptC.pm:159:                    if ($stmt->rvalue->isa('AST::Call')) {
+lib/Mildew/Backend/OptC.pm:167:                    } elsif ($stmt->rvalue->isa('AST::Phi')) {
+lib/Mildew/Backend/OptC.pm:170:                    } elsif ($stmt->rvalue->isa('AST::InferredTypeTest')) {
+lib/Mildew/Backend/OptC.pm:172:                        $code .= Mildew::Emit::Yeast::assign($value->($stmt->lvalue),"SMOP_REFERENCE(interpreter,".$value->(AST::IntegerConstant->new(value=>eval($stmt->rvalue->test) ? 1 : 0).")"));
+lib/Mildew/Backend/C.pm:4:    use AST;
+lib/Mildew/Backend/C.pm:5:    use AST::Helpers;
+lib/Mildew/Backend/C.pm:30:        AST::Block->new(regs=>['interpreter','scope'],stmts=>[fcall(call(new => FETCH(lookup('Code')),[],[string 'outer'=>($scope // reg '$scope'),string 'signature'=>empty_sig(),string 'mold' => $ast]))]);
+lib/VAST.pm:5:    package VAST;
+lib/VAST.pm:6:    use Module::Pluggable sub_name=>"subclasses",search_path=>["VAST"],require=>1;
+lib/VAST.pm:7:    # load all the VAST::* subclasses
+lib/VAST.pm:8:    VAST->subclasses;
+lib/VAST.pm:10:class VAST::Base {
+lib/VAST.pm:12:        use AST::Helpers;
+lib/VAST/statement_control__S_unless.pm:4:class VAST::statement_control__S_unless {
+lib/VAST/statement_control__S_unless.pm:5:    use AST::Helpers;
+lib/VAST/statement_control__S_unless.pm:8:        AST::If->new
+lib/VAST/infix__S_ColonEqual.pm:3:class VAST::infix__S_ColonEqual {
+lib/VAST/infix__S_ColonEqual.pm:4:    use AST::Helpers;
+lib/VAST/nibbler.pm:2:class VAST::nibbler {
+lib/VAST/nibbler.pm:4:    use AST::Helpers;
+lib/VAST/blockoid.pm:1:package VAST::blockoid;
+lib/VAST/blockoid.pm:5:use AST::Helpers;
+lib/VAST/blockoid.pm:10:    AST::Block->new(regs=>['interpreter','scope'],stmts=>trailing_return($m->{statementlist}->emit_m0ld));
+lib/VAST/circumfix__S_Cur_Ly.pm:4:class VAST::circumfix__S_Cur_Ly {
+lib/VAST/circumfix__S_Cur_Ly.pm:5:    use AST::Helpers;
+lib/VAST/postcircumfix__S_Bra_Ket.pm:4:class VAST::postcircumfix__S_Bra_Ket {
+lib/VAST/postcircumfix__S_Bra_Ket.pm:5:    use AST::Helpers;
+lib/VAST/arglist.pm:1:package VAST::arglist;
+lib/VAST/arglist.pm:5:use AST::Helpers;
+lib/VAST/statement_control__S_no.pm:4:class VAST::statement_control__S_no {
+lib/VAST/statement_control__S_no.pm:5:    use AST::Helpers;
+lib/VAST/infix__S_Equal.pm:3:class VAST::infix__S_Equal {
+lib/VAST/infix__S_Equal.pm:4:    use AST::Helpers;
+lib/VAST/statement_control__S_use.pm:4:class VAST::statement_control__S_use {
+lib/VAST/statement_control__S_use.pm:5:    use AST::Helpers;
+lib/VAST/longname.pm:2:class VAST::longname {
+lib/VAST/longname.pm:4:    use AST::Helpers;
+lib/VAST/signature.pm:1:package VAST::signature;
+lib/VAST/signature.pm:5:use AST::Helpers;
+lib/VAST/signature.pm:27:    AST::Call->new
+lib/VAST/signature.pm:29:          capture => AST::Capture->new
+lib/VAST/signature.pm:33:            [ string 'BIND' => AST::Block->new
+lib/VAST/signature.pm:48:        AST::Seq->new(stmts => [
+lib/VAST/signature.pm:63:        AST::Seq->new(stmts => $stmts);
+lib/VAST/scope_declarator__S_has.pm:4:class VAST::scope_declarator__S_has {
+lib/VAST/scope_declarator__S_has.pm:5:    use AST::Helpers;
+lib/VAST/scope_declarator__S_has.pm:11:    		       desigilname => $var_decl->{variable}{desigilname} }, 'VAST::variable';
+lib/VAST/scope_declarator__S_has.pm:13:        my $sig = AST::Call->new
+lib/VAST/scope_declarator__S_has.pm:15:              capture => AST::Capture->new
+lib/VAST/scope_declarator__S_has.pm:19:                [ string 'BIND' => AST::Block->new
+lib/VAST/scope_declarator__S_has.pm:27:    	   AST::Block->new(regs => ['interpreter','scope'],
+lib/VAST/scope_declarator__S_has.pm:48:    	AST::Seq->new(stmts => [
+lib/VAST/scope_declarator__S_has.pm:74:	    AST::Seq->new
+lib/VAST/statement_control__S_CONTROL.pm:8:class VAST::statement_control__S_CONTROL {
+lib/VAST/statement_control__S_CONTROL.pm:9:    use AST::Helpers;
+lib/VAST/statement_control__S_while.pm:4:class VAST::statement_control__S_while {
+lib/VAST/statement_control__S_while.pm:5:    use AST::Helpers;
+lib/VAST/statement_control__S_while.pm:7:        AST::While->new(cond => $self->{xblock}{EXPR}->emit_m0ld, body => call('postcircumfix:( )',code($self->{xblock}{pblock}{blockoid}),[capturize([])]));
+lib/VAST/infix__S_VertVert.pm:3:class VAST::infix__S_VertVert {
+lib/VAST/infix__S_VertVert.pm:4:    use AST::Helpers;
+lib/VAST/infix__S_VertVert.pm:8:            AST::If->new(cond => $left,then => $left,else => $self->{args}[1]->emit_m0ld);
+lib/VAST/postcircumfix__S_Lt_Gt.pm:4:class VAST::postcircumfix__S_Lt_Gt {
+lib/VAST/postcircumfix__S_Lt_Gt.pm:5:    use AST::Helpers;
+lib/VAST/escape__S_Dollar.pm:4:class VAST::escape__S_Dollar {
+lib/VAST/escape__S_Dollar.pm:5:    use AST::Helpers;
+lib/VAST/parameter.pm:1:package VAST::parameter;
+lib/VAST/parameter.pm:5:use AST::Helpers;
+lib/VAST/parameter.pm:62:                [ string 'mold' => AST::Block->new(regs=>['interpreter','scope'],stmts=>
+lib/VAST/parameter.pm:68:        AST::Seq->new(stmts => [
+lib/VAST/args.pm:1:package VAST::args;
+lib/VAST/args.pm:5:use AST::Helpers;
+lib/VAST/variable.pm:2:class VAST::variable {
+lib/VAST/variable.pm:4:    use AST::Helpers;
+lib/VAST/statementlist.pm:1:package VAST::statementlist;
+lib/VAST/statementlist.pm:5:use AST::Helpers;
+lib/VAST/Str.pm:4:class VAST::Str {
+lib/VAST/Str.pm:5:    use AST::Helpers;
+lib/VAST/scope_declarator__S_our.pm:3:class VAST::scope_declarator__S_our {
+lib/VAST/scope_declarator__S_our.pm:4:    use AST::Helpers;
+lib/VAST/infix__S_AmpAmp.pm:3:class VAST::infix__S_AmpAmp {
+lib/VAST/infix__S_AmpAmp.pm:4:    use AST::Helpers;
+lib/VAST/infix__S_AmpAmp.pm:8:            AST::If->new(cond => $left,then => $self->{args}[1]->emit_m0ld,else => $left);
+lib/VAST/circumfix__S_Paren_Thesis.pm:3:class VAST::circumfix__S_Paren_Thesis {
+lib/VAST/circumfix__S_Paren_Thesis.pm:4:    use AST::Helpers;
+lib/VAST/term__S_colonpair.pm:4:class VAST::term__S_colonpair {
+lib/VAST/term__S_colonpair.pm:5:    use AST::Helpers;
+lib/VAST/integer.pm:2:class VAST::integer {
+lib/VAST/integer.pm:3:    use AST::Helpers;
+lib/VAST/statement_prefix__S_do.pm:4:class VAST::statement_prefix__S_do {
+lib/VAST/statement_prefix__S_do.pm:5:    use AST::Helpers;
+lib/VAST/statement_control__S_CATCH.pm:8:class VAST::statement_control__S_CATCH {
+lib/VAST/statement_control__S_CATCH.pm:9:    use AST::Helpers;
+lib/VAST/colonpair.pm:1:package VAST::colonpair;
+lib/VAST/colonpair.pm:6:use AST::Helpers;
+lib/VAST/colonpair.pm:18:    if (ref $m->{v}{circumfix} eq 'VAST::circumfix__S_Paren_Thesis') {
+lib/VAST/colonpair.pm:20:    } elsif (ref $m->{v}{circumfix} eq 'VAST::circumfix__S_Lt_Gt') {
+lib/VAST/colonpair.pm:25:    AST::Pair->new(key => $key, value => $value);
+lib/VAST/postfix__S_PlusPlus.pm:3:class VAST::postfix__S_PlusPlus {
+lib/VAST/postfix__S_PlusPlus.pm:4:    use AST::Helpers;
+lib/VAST/sublongname.pm:2:class VAST::sublongname {
+lib/VAST/sublongname.pm:4:    use AST::Helpers;
+lib/VAST/comp_unit.pm:1:package VAST::comp_unit;
+lib/VAST/comp_unit.pm:5:use AST::Helpers;
+lib/VAST/comp_unit.pm:9:    AST::Block->new(regs=>['interpreter','scope'],stmts=>$m->{statementlist}->emit_m0ld);
+lib/VAST/prefix__S_PlusPlus.pm:3:class VAST::prefix__S_PlusPlus {
+lib/VAST/prefix__S_PlusPlus.pm:4:    use AST::Helpers;
+lib/VAST/term__S_self.pm:4:class VAST::term__S_self {
+lib/VAST/term__S_self.pm:5:    use AST::Helpers;
+lib/VAST/postcircumfix__S_Paren_Thesis.pm:4:class VAST::postcircumfix__S_Paren_Thesis {
+lib/VAST/postcircumfix__S_Paren_Thesis.pm:5:    use AST::Helpers;
+lib/VAST/postcircumfix__S_Paren_Thesis.pm:8:        if ($self->{arg}->isa('VAST::term__S_name')) {
+lib/VAST/routine_def.pm:1:package VAST::routine_def;
+lib/VAST/routine_def.pm:5:use AST::Helpers;
+lib/VAST/routine_def.pm:52:	AST::Seq->new(stmts => [
+lib/VAST/dotty__S_DotStar.pm:3:class VAST::dotty__S_DotStar {
+lib/VAST/dotty__S_DotStar.pm:4:    use AST::Helpers;
+lib/VAST/postcircumfix__S_Cur_Ly.pm:4:class VAST::postcircumfix__S_Cur_Ly {
+lib/VAST/postcircumfix__S_Cur_Ly.pm:5:    use AST::Helpers;
+lib/VAST/fatarrow.pm:1:package VAST::fatarrow;
+lib/VAST/fatarrow.pm:5:use AST::Helpers;
+lib/VAST/fatarrow.pm:9:    AST::Pair->new(key => $m->{key}->emit_m0ld, value => $m->{val}->emit_m0ld);
+lib/VAST/statement.pm:2:package VAST::statement;
+lib/VAST/statement.pm:7:use AST::Helpers;
+lib/VAST/statement.pm:13:        AST::Label->new(label=>label($m->{label}),stmt=>statement($m->{statement}));
+lib/VAST/statement.pm:16:    } elsif ($m->{EXPR} && $m->{EXPR}{circumfix} && $m->{EXPR}{circumfix}->isa('VAST::circumfix__S_Cur_Ly')) {
+lib/VAST/identifier.pm:4:class VAST::identifier {
+lib/VAST/identifier.pm:5:    use AST::Helpers;
+lib/VAST/statement_control__S_until.pm:4:class VAST::statement_control__S_until {
+lib/VAST/statement_control__S_until.pm:5:    use AST::Helpers;
+lib/VAST/statement_control__S_until.pm:7:        AST::While->new(cond => fcall('&not' => [$self->{xblock}{EXPR}->emit_m0ld]), body => call('postcircumfix:( )',code($self->{xblock}{pblock}{blockoid}),[capturize([])])); 
+lib/VAST/package_declarator.pm:3:class VAST::package_declarator {
+lib/VAST/package_declarator.pm:4:    use AST::Helpers;
+lib/VAST/package_declarator.pm:7:        my $id_type_sub = AST::unique_id;
+lib/VAST/package_declarator.pm:20:        my $mold = AST::Block->new(regs => $init->regs,stmts => [
+lib/VAST/package_declarator.pm:25:                    AST::Seq->new(stmts => [
+lib/VAST/package_declarator.pm:33:    			AST::Seq->new(stmts => [
+lib/VAST/package_declarator.pm:44:    			     call(new => FETCH(lookup('Code')),[],[string 'outer'=>reg '$scope',,string 'signature'=>empty_sig(),string 'mold' => AST::Block->new(regs=>['interpreter','scope'],stmts=>trailing_return([lookup('$?CLASS')]))])
+lib/VAST/escape__S_Back.pm:4:class VAST::escape__S_Back {
+lib/VAST/escape__S_Back.pm:5:    use AST::Helpers;
+lib/VAST/escape__S_Back.pm:8:        if ($self->{item}->isa('VAST::backslash__S_stopper')) {
+lib/VAST/escape__S_Back.pm:11:        if ($self->{item}->isa('VAST::backslash__S_Back')) {
+lib/VAST/package_declarator__S_module.pm:4:class VAST::package_declarator__S_module {
+lib/VAST/package_declarator__S_module.pm:5:    use AST::Helpers;
+lib/VAST/package_declarator__S_module.pm:8:        my $id_type_sub = AST::unique_id;
+lib/VAST/package_declarator__S_module.pm:12:            return AST::Seq->new(stmts=>$self->{package_def}{statementlist}->emit_m0ld);
+lib/VAST/package_declarator__S_module.pm:16:        my $mold = AST::Block->new(regs => $init->regs,stmts => [
+lib/VAST/package_declarator__S_module.pm:19:    	    AST::Seq->new(stmts => [
+lib/VAST/package_declarator__S_module.pm:25:    			AST::Seq->new(stmts => [
+lib/VAST/dotty__S_Dot.pm:3:class VAST::dotty__S_Dot {
+lib/VAST/dotty__S_Dot.pm:4:    use AST::Helpers;
+lib/VAST/Chaining.pm:3:class VAST::Chaining {
+lib/VAST/Chaining.pm:4:    use AST::Helpers;
+lib/VAST/infix__S_Comma.pm:2:class VAST::infix__S_Comma {
+lib/VAST/infix__S_Comma.pm:3:    use AST::Helpers;
+lib/VAST/term__S_identifier.pm:3:class VAST::term__S_identifier {
+lib/VAST/term__S_identifier.pm:4:    use AST::Helpers;
+lib/VAST/term__S_identifier.pm:10:            if ($args[1]->isa('AST::StringConstant')) {
+lib/VAST/term__S_identifier.pm:11:                fcall '&ok' => [AST::InferredTypeTest->new(value=>$args[0],test=>$args[1]->value)]; 
+lib/VAST/multi_declarator__S_multi.pm:1:package VAST::multi_declarator__S_multi;
+lib/VAST/multi_declarator__S_multi.pm:5:use AST::Helpers;
+lib/VAST/multi_declarator__S_multi.pm:15:            if ($colonpair->{coloncircumfix}{circumfix}->isa('VAST::circumfix__S_Lt_Gt')) {
+lib/VAST/multi_declarator__S_multi.pm:25:    my $ret = AST::Seq->new(stmts=>[
+lib/VAST/statement_control__S_if.pm:3:class VAST::statement_control__S_if {
+lib/VAST/statement_control__S_if.pm:4:    use AST::Helpers;
+lib/VAST/statement_control__S_if.pm:22:                push @elsif, AST::If->new
+lib/VAST/statement_control__S_if.pm:28:        AST::If->new
+lib/VAST/method_def.pm:1:package VAST::method_def;
+lib/VAST/method_def.pm:5:use AST::Helpers;
+lib/VAST/statement_control__S_for.pm:4:class VAST::statement_control__S_for {
+lib/VAST/statement_control__S_for.pm:5:    use AST::Helpers;
+lib/VAST/prefix__S_Vert.pm:4:class VAST::prefix__S_Vert {
+lib/VAST/prefix__S_Vert.pm:5:    use AST::Helpers;
+lib/VAST/scope_declarator__S_my.pm:3:class VAST::scope_declarator__S_my {
+lib/VAST/scope_declarator__S_my.pm:4:    use AST::Helpers;
+lib/VAST/semiarglist.pm:1:package VAST::semiarglist;
+lib/VAST/semiarglist.pm:5:use AST::Helpers;
+lib/VAST/statement_control__S_loop.pm:4:class VAST::statement_control__S_loop {
+lib/VAST/statement_control__S_loop.pm:5:    use AST::Helpers;
+lib/VAST/statement_control__S_loop.pm:7:        AST::Loop->new(code => call('postcircumfix:( )',code($self->{block}),[capturize([])]));
+lib/VAST/term__S_name.pm:4:class VAST::term__S_name {
+lib/VAST/term__S_name.pm:5:    use AST::Helpers;
+lib/VAST/term__S_YOU_ARE_HERE.pm:4:class VAST::term__S_YOU_ARE_HERE {
+lib/VAST/term__S_YOU_ARE_HERE.pm:5:    use AST::Helpers;
+lib/VAST/term__S_YOU_ARE_HERE.pm:8:        AST::Assign->new(lvalue=>reg '$YOU_ARE_HERE',rvalue=>call clone=>reg '$scope');
+t/m0ld.t:3:use AST;
+t/m0ld.t:19:isa_ok($ast,'AST::Block');
+t/m0ld.t:21:isa_ok($seq,'AST::Seq');
+t/m0ld.t:22:isa_ok($seq->stmts->[0],'AST::Assign');
+t/m0ld.t:29:isa_ok($ast,'AST::Block');
+t/m0ld.t:30:isa_ok($seq,'AST::Seq');
+t/m0ld.t:31:isa_ok($seq->stmts->[0],'AST::Assign');
+t/m0ld.t:43:isa_ok($ast->stmts->[1]->stmts->[0],'AST::Assign');
+t/m0ld.t:49:isa_ok($ast->stmts->[1]->stmts->[0],'AST::Assign');
+t/m0ld.t:50:isa_ok($ast->stmts->[1]->stmts->[1],'AST::Goto');
+t/m0ld.t:62:isa_ok($ast->stmts->[0]->stmts->[1],'AST::Branch','conditional branch');
+t/m0ld.t:71:isa_ok($ast->stmts->[0]->stmts->[0]->rvalue,'AST::Block','submold');
+t/m0ld.t:72:isa_ok($ast->stmts->[0]->stmts->[0]->rvalue->stmts->[0]->stmts->[0],'AST::Assign','assignment in submold');
+t/ast-helpers.t:3:use AST::Helpers;
+t/ast-helpers.t:4:use AST;
+t/ast-helpers.t:11:isa_ok($integer->[0],'AST::IntegerConstant');
+t/ast-helpers.t:13:isa_ok($integer->[0],'AST::IntegerConstant');
+t/ast-helpers.t:15:my $block = AST::Block->new(stmts=>[integer 45],regs=>['foo']);
+t/ast-helpers.t:17:isa_ok($wrapped,'AST::Block','a wrapped block');
+t/ssa.t:3:use AST;
+t/ssa.t:6:my $empty_block = AST::Block->new(regs=>['interpreter','scope'],stmts=>[]);
+t/simplified.t:3:use AST;
+t/simplified.t:5:my $empty_block = AST::Block->new(regs=>['interpreter','scope'],stmts=>[]);
+t/simplified.t:10:my $branch = AST::Branch->new(cond=>reg '$foo',then=>AST::Block->new(stmts=>[]),else=>AST::Block->new(stmts=>[]));
+t/simplified.t:13:isa_ok($branch_simplified,'AST::Branch');
+.build/EMIfgl6zUZ/bin/mildew:123:                require Mildew::Backend::DumpAST;
+.build/EMIfgl6zUZ/bin/mildew:124:                return Mildew::Backend::DumpAST->new(format=>$backend);
+.build/EMIfgl6zUZ/lib/AST/Assign.pm:3:class AST::Assign extends AST::Base {
+.build/EMIfgl6zUZ/lib/AST/Assign.pm:17:        ($self->lvalue,@setup,AST::Assign->new(lvalue=>$self->lvalue,rvalue=>$rvalue));
+.build/EMIfgl6zUZ/lib/AST/Capture.pm:3:class AST::Capture extends AST::Base {
+.build/EMIfgl6zUZ/lib/AST/Capture.pm:4:    has 'invocant' => (is=>'ro',isa=>'AST::Base');
+.build/EMIfgl6zUZ/lib/AST/Capture.pm:5:    has 'positional' => (is=>'ro',default=>sub {[]},isa=>'ArrayRef[AST::Base]');
+.build/EMIfgl6zUZ/lib/AST/Capture.pm:6:    has 'named' => (is=>'ro',default=>sub {[]},isa=>'ArrayRef[AST::Base]');
+.build/EMIfgl6zUZ/lib/AST/Block.pm:1:class AST::Block extends AST::Base {
+.build/EMIfgl6zUZ/lib/AST/Block.pm:2:    has 'stmts' => (is=>'ro',isa=>'ArrayRef[AST::Base]');
+.build/EMIfgl6zUZ/lib/AST/Block.pm:12:        "mold \{\n". AST::indent(
+.build/EMIfgl6zUZ/lib/AST/Block.pm:14:            . join("",map {AST::terminate_stmt  $_->pretty } @{$self->stmts})
+.build/EMIfgl6zUZ/lib/AST/Block.pm:25:        AST::Block::Simplified->new(regs=>$self->regs,stmts=>[@stmts,$value ? ($value) : ()]);
+.build/EMIfgl6zUZ/lib/AST/Comment.pm:3:class AST::Comment extends AST::Base {
+.build/EMIfgl6zUZ/lib/AST/Branch.pm:3:class AST::Branch extends AST::Base {
+.build/EMIfgl6zUZ/lib/AST/Branch.pm:19:        (AST::Branch->new(cond=>$cond,then=>$self->then,else=>$self->else,@setup));
+.build/EMIfgl6zUZ/lib/AST/Goto.pm:3:class AST::Goto extends AST::Base {
+.build/EMIfgl6zUZ/lib/AST/If.pm:3:class AST::If extends AST::Base {
+.build/EMIfgl6zUZ/lib/AST/If.pm:4:    use AST::Helpers;
+.build/EMIfgl6zUZ/lib/AST/If.pm:10:        my $id_cond = AST::unique_id;
+.build/EMIfgl6zUZ/lib/AST/If.pm:11:        my $label_then = AST::unique_label;
+.build/EMIfgl6zUZ/lib/AST/If.pm:12:        my $label_else = AST::unique_label;
+.build/EMIfgl6zUZ/lib/AST/If.pm:13:        my $label_endif = AST::unique_label;
+.build/EMIfgl6zUZ/lib/AST/If.pm:24:                my $id_elsif_cond = AST::unique_id;
+.build/EMIfgl6zUZ/lib/AST/If.pm:25:                my $label_elsif_then = AST::unique_label;
+.build/EMIfgl6zUZ/lib/AST/If.pm:26:                my $label_elsif_else = AST::unique_label;
+.build/EMIfgl6zUZ/lib/AST/If.pm:55:        my $endif = AST::Seq->new(stmts=>[],id=>AST::unique_label);
+.build/EMIfgl6zUZ/lib/AST/If.pm:56:        my $result = AST::unique_reg;
+.build/EMIfgl6zUZ/lib/AST/If.pm:65:            my $then = AST::Seq->new(id=>AST::unique_label,stmts=>[@then_setup,AST::Assign->new(lvalue=>$result,rvalue=>$then_val),AST::Goto->new(block=>$endif)]);
+.build/EMIfgl6zUZ/lib/AST/If.pm:66:            $branch = AST::Branch->new(cond=>$cond,then=>$then);
+.build/EMIfgl6zUZ/lib/AST/If.pm:67:            my $block = AST::Seq->new(id=>AST::unique_label,stmts=>[@cond_setup,$branch,$then]);
+.build/EMIfgl6zUZ/lib/AST/If.pm:74:            my $else = AST::Seq->new(id=>AST::unique_label,stmts=>[@else_setup,AST::Assign->new(lvalue=>$result,rvalue=>$else_val),AST::Goto->new(block=>$endif)]);
+.build/EMIfgl6zUZ/lib/AST/If.pm:88:                . AST::indent($self->then->pretty) . "\n"
+.build/EMIfgl6zUZ/lib/AST/If.pm:93:                . AST::indent($self->else->pretty) . "\n"
+.build/EMIfgl6zUZ/lib/AST/If.pm:100:                    . AST::indent($self->then->pretty). "\n"
+.build/EMIfgl6zUZ/lib/AST/If.pm:107:                . AST::indent($self->else->pretty). "\n"
+.build/EMIfgl6zUZ/lib/AST/Base.pm:4:class AST::Base {
+.build/EMIfgl6zUZ/lib/AST/While.pm:3:class AST::While extends AST::Base {
+.build/EMIfgl6zUZ/lib/AST/While.pm:4:    use AST::Helpers;
+.build/EMIfgl6zUZ/lib/AST/While.pm:9:        my $id_cond = AST::unique_id;
+.build/EMIfgl6zUZ/lib/AST/While.pm:10:        my $start = AST::unique_label;
+.build/EMIfgl6zUZ/lib/AST/While.pm:11:        my $label_start = AST::unique_label;
+.build/EMIfgl6zUZ/lib/AST/While.pm:12:        my $label_end = AST::unique_label;
+.build/EMIfgl6zUZ/lib/AST/While.pm:13:        my $label_body = AST::unique_label;
+.build/EMIfgl6zUZ/lib/AST/While.pm:26:        . AST::indent($self->body->pretty) . "\n"
+.build/EMIfgl6zUZ/lib/AST/While.pm:35:        my $branch = AST::Branch->new(cond=>$cond);
+.build/EMIfgl6zUZ/lib/AST/While.pm:37:        my $cond_block = AST::Seq->new(id=>AST::unique_label,stmts=>[@cond_setup,$branch]);
+.build/EMIfgl6zUZ/lib/AST/While.pm:38:        my $body = AST::Seq->new(id=>AST::unique_label,stmts=>[
+.build/EMIfgl6zUZ/lib/AST/While.pm:40:            AST::Goto->new(block=>$cond_block)
+.build/EMIfgl6zUZ/lib/AST/While.pm:43:        my $end = AST::Seq->new(id=>AST::unique_label,stmts=>[]);
+.build/EMIfgl6zUZ/lib/AST/Reg.pm:3:class AST::Reg extends AST::Base {
+.build/EMIfgl6zUZ/lib/AST/Let.pm:3:class AST::Let extends AST::Base {
+.build/EMIfgl6zUZ/lib/AST/Let.pm:7:        my $id = AST::unique_id;
+.build/EMIfgl6zUZ/lib/AST/Let.pm:8:        $self->value->m0ld($id) . $self->block->(AST::Reg->new(name=>$id))->m0ld($ret);
+.build/EMIfgl6zUZ/lib/AST/Let.pm:11:        my $id = AST::unique_id;
+.build/EMIfgl6zUZ/lib/AST/Let.pm:12:        "do {\n". AST::indent('my ' . $id . ' = ' . $self->value->pretty . ";\n"
+.build/EMIfgl6zUZ/lib/AST/Let.pm:13:        . $self->block->(AST::Reg->new(name => $id))->pretty) . '}';
+.build/EMIfgl6zUZ/lib/AST/Pair.pm:3:class AST::Pair extends AST::Base {
+.build/EMIfgl6zUZ/lib/AST/InferredTypeTest.pm:3:class AST::InferredTypeTest extends AST::Base {
+.build/EMIfgl6zUZ/lib/AST/InferredTypeTest.pm:8:        my $ret = AST::unique_reg;
+.build/EMIfgl6zUZ/lib/AST/InferredTypeTest.pm:9:        ($ret,@setup,AST::Assign->new(lvalue=>$ret,rvalue=>AST::InferredTypeTest->new(value=>$value,test=>$self->test)));
+.build/EMIfgl6zUZ/lib/AST/Helpers.pm:1:package AST::Helpers;
+.build/EMIfgl6zUZ/lib/AST/Helpers.pm:17:    AST::StringConstant->new(value=>$_[0]);
+.build/EMIfgl6zUZ/lib/AST/Helpers.pm:21:    AST::Reg->new(name=>$_[0]);
+.build/EMIfgl6zUZ/lib/AST/Helpers.pm:25:    AST::IntegerConstant->new(value=>$_[0]);
+.build/EMIfgl6zUZ/lib/AST/Helpers.pm:30:    AST::Call->new(identifier=>string($_[0]),capture=>AST::Capture->new(invocant => $_[1],positional => $_[2]//[],named => $_[3]//[]));
+.build/EMIfgl6zUZ/lib/AST/Helpers.pm:60:    AST::Call->new(
+.build/EMIfgl6zUZ/lib/AST/Helpers.pm:62:        capture => AST::Capture->new(
+.build/EMIfgl6zUZ/lib/AST/Helpers.pm:73:    AST::Let->new(value=>$value,block=>sub { local $Mildew::adhoc_sig = $adhoc_sig;$block->(@_)});
+.build/EMIfgl6zUZ/lib/AST/Helpers.pm:77:  AST::Call->new
+.build/EMIfgl6zUZ/lib/AST/Helpers.pm:79:      capture => AST::Capture->new
+.build/EMIfgl6zUZ/lib/AST/Helpers.pm:83:        [ string 'BIND' => AST::Block->new
+.build/EMIfgl6zUZ/lib/AST/Helpers.pm:89:  AST::Call->new
+.build/EMIfgl6zUZ/lib/AST/Helpers.pm:91:      capture => AST::Capture->new
+.build/EMIfgl6zUZ/lib/AST/Helpers.pm:95:        [ string 'BIND' => AST::Block->new
+.build/EMIfgl6zUZ/lib/AST/Helpers.pm:116:	    AST::Block->new
+.build/EMIfgl6zUZ/lib/AST/Helpers.pm:154:        if (defined $sc && ($sc->isa('VAST::statement_control__S_CATCH') || $sc->isa('VAST::statement_control__S_CONTROL'))) {
+.build/EMIfgl6zUZ/lib/AST/Helpers.pm:201:    [grep { ref $_ ne 'AST::Pair' } @_],[map { $_->key, $_->value } grep { ref eq 'AST::Pair' } @_]
+.build/EMIfgl6zUZ/lib/AST/Helpers.pm:215:    AST::Block->new(regs=>['interpreter','scope'],stmts=>trailing_return([fcall(call(new => FETCH(lookup('Code')),[],[string 'outer'=>($scope // reg '$scope'),string 'signature'=>empty_sig(),string 'mold' => $ast]))]));
+.build/EMIfgl6zUZ/lib/AST/Phi.pm:4:class AST::Phi extends AST::Base {
+.build/EMIfgl6zUZ/lib/AST/Call.pm:3:class AST::Call extends AST::Base {
+.build/EMIfgl6zUZ/lib/AST/Call.pm:5:    use AST::Helpers qw(YYY);
+.build/EMIfgl6zUZ/lib/AST/Call.pm:13:            push (@args,AST::Named->new(key=>shift @named,value=>shift @named));
+.build/EMIfgl6zUZ/lib/AST/Call.pm:18:        if ($self->capture->isa("AST::Capture")) {
+.build/EMIfgl6zUZ/lib/AST/Call.pm:19:            my $invocant = AST::unique_id;
+.build/EMIfgl6zUZ/lib/AST/Call.pm:20:            my $identifier = AST::unique_id;
+.build/EMIfgl6zUZ/lib/AST/Call.pm:25:                my $id = AST::unique_id;
+.build/EMIfgl6zUZ/lib/AST/Call.pm:32:                my $key = AST::unique_id;
+.build/EMIfgl6zUZ/lib/AST/Call.pm:33:                my $value =  AST::unique_id;
+.build/EMIfgl6zUZ/lib/AST/Call.pm:50:        if ($self->capture->isa("AST::Capture")) {
+.build/EMIfgl6zUZ/lib/AST/Call.pm:70:            my $reg = AST::unique_reg;
+.build/EMIfgl6zUZ/lib/AST/Call.pm:71:            ($reg,@invocant_setup,@identifier_setup,@setup_args,AST::Assign->new(lvalue=>$reg,rvalue=>
+.build/EMIfgl6zUZ/lib/AST/Call.pm:72:                AST::Call->new(identifier=>$identifier,capture=>AST::Capture->new(
+.build/EMIfgl6zUZ/lib/AST/Call.pm:85:        if ($self->identifier->isa("AST::StringConstant")) {
+.build/EMIfgl6zUZ/lib/AST/Call.pm:98:        if ($self->capture->isa("AST::Capture")) {
+.build/EMIfgl6zUZ/lib/AST/Loop.pm:3:class AST::Loop extends AST::Base {
+.build/EMIfgl6zUZ/lib/AST/Loop.pm:6:        my $label = AST::unique_label;
+.build/EMIfgl6zUZ/lib/AST/Loop.pm:11:        my $goto = AST::Goto->new();
+.build/EMIfgl6zUZ/lib/AST/Loop.pm:13:        my $block = AST::Seq->new(id=>AST::unique_label,stmts=>[@setup,$goto]);
+.build/EMIfgl6zUZ/lib/AST/Loop.pm:19:        . AST::indent($self->code->pretty) . "\n"
+.build/EMIfgl6zUZ/lib/AST/Block/SSA.pm:4:class AST::Block::SSA extends AST::Block {
+.build/EMIfgl6zUZ/lib/AST/Block/Simplified.pm:4:class AST::Block::Simplified extends AST::Block {
+.build/EMIfgl6zUZ/lib/AST/IntegerConstant.pm:3:class AST::IntegerConstant extends AST::Base {
+.build/EMIfgl6zUZ/lib/AST/StringConstant.pm:3:class AST::StringConstant extends AST::Base {;
+.build/EMIfgl6zUZ/lib/AST/Seq.pm:1:class AST::Seq extends AST::Base {
+.build/EMIfgl6zUZ/lib/AST/Seq.pm:7:        . join("",map {AST::terminate_stmt $_->pretty} @{$self->stmts});
+.build/EMIfgl6zUZ/lib/AST/Seq.pm:12:        my $m0ld = join('',map {$_->m0ld(AST::unique_id)} @stmts);
+.build/EMIfgl6zUZ/lib/AST/Seq.pm:29:        if (defined $last && $last->isa('AST::Goto')) {
+.build/EMIfgl6zUZ/lib/AST/Seq.pm:31:        } elsif (defined $last && $last->isa('AST::Branch')) {
+.build/EMIfgl6zUZ/lib/AST.pm:5:package AST;
+.build/EMIfgl6zUZ/lib/AST.pm:11:    AST::Reg->new(name=>unique_id);
+.build/EMIfgl6zUZ/lib/AST.pm:36:use AST::Base;
+.build/EMIfgl6zUZ/lib/AST.pm:37:use AST::Call;
+.build/EMIfgl6zUZ/lib/AST.pm:38:use AST::If;
+.build/EMIfgl6zUZ/lib/AST.pm:39:use AST::Let;
+.build/EMIfgl6zUZ/lib/AST.pm:40:use AST::Assign;
+.build/EMIfgl6zUZ/lib/AST.pm:41:use AST::Helpers;
+.build/EMIfgl6zUZ/lib/AST.pm:42:use AST::Comment;
+.build/EMIfgl6zUZ/lib/AST.pm:43:use AST::While;
+.build/EMIfgl6zUZ/lib/AST.pm:44:use AST::Pair;
+.build/EMIfgl6zUZ/lib/AST.pm:45:use AST::IntegerConstant;
+.build/EMIfgl6zUZ/lib/AST.pm:46:use AST::StringConstant;
+.build/EMIfgl6zUZ/lib/AST.pm:47:use AST::Branch;
+.build/EMIfgl6zUZ/lib/AST.pm:48:use AST::Reg;
+.build/EMIfgl6zUZ/lib/AST.pm:49:use AST::Capture;
+.build/EMIfgl6zUZ/lib/AST.pm:50:use AST::Goto;
+.build/EMIfgl6zUZ/lib/AST.pm:51:use AST::Block;
+.build/EMIfgl6zUZ/lib/AST.pm:52:use AST::Block::SSA;
+.build/EMIfgl6zUZ/lib/AST.pm:53:use AST::Seq;
+.build/EMIfgl6zUZ/lib/AST.pm:54:use AST::Loop;
+.build/EMIfgl6zUZ/lib/AST.pm:55:use AST::InferredTypeTest;
+.build/EMIfgl6zUZ/lib/AST.pm:56:use AST::Phi;
+.build/EMIfgl6zUZ/lib/AST.pm:57:use AST::Block::Simplified;
+.build/EMIfgl6zUZ/lib/Mildew/Types.pm:6:    has mold=>(is=>'rw',isa=>'AST::Block::SSA');
+.build/EMIfgl6zUZ/lib/Mildew/Types.pm:7:    has usage=>(is=>'ro',isa=>'ArrayRef[AST::Base]',default=>sub {[]});
+.build/EMIfgl6zUZ/lib/Mildew/Types.pm:17:    has orgin=>(is=>'ro',isa=>'AST::Base',required=>1);
+.build/EMIfgl6zUZ/lib/Mildew/Types.pm:21:        if ($rvalue->isa('AST::Call')) {
+.build/EMIfgl6zUZ/lib/Mildew/Types.pm:51:        defined $value && $value->isa('AST::StringConstant');
+.build/EMIfgl6zUZ/lib/Mildew/Types.pm:81:        my $perlesque_capture = AST::unique_id();
+.build/EMIfgl6zUZ/lib/Mildew/Types.pm:136:    has reg=>(is=>'rw',isa=>'AST::Reg');
+.build/EMIfgl6zUZ/lib/Mildew/Types.pm:150:            if ($stmt->rvalue->isa('AST::Call')) {
+.build/EMIfgl6zUZ/lib/Mildew/Types.pm:242:        if ($usage->isa('AST::Assign')) {
+.build/EMIfgl6zUZ/lib/Mildew/Types.pm:244:            if ($call->isa('AST::Call') && (refaddr $call->capture->invocant == refaddr $reg)) {
+.build/EMIfgl6zUZ/lib/Mildew/Compiler.pm:3:use AST;
+.build/EMIfgl6zUZ/lib/Mildew/Compiler.pm:4:use VAST;
+.build/EMIfgl6zUZ/lib/Mildew/Compiler.pm:6:    for (<src/VAST/*.pm>) {
+.build/EMIfgl6zUZ/lib/Mildew/Compiler.pm:11:    use AST::Helpers;
+.build/EMIfgl6zUZ/lib/Mildew/Frontend/M0ld.pm:4:use AST;
+.build/EMIfgl6zUZ/lib/Mildew/Frontend/M0ld.pm:9:    # converts an arrayref of statements to a AST::Block
+.build/EMIfgl6zUZ/lib/Mildew/Frontend/M0ld.pm:20:                $seqs{$label} = AST::Seq->new(stmts=>[],id=>$label);
+.build/EMIfgl6zUZ/lib/Mildew/Frontend/M0ld.pm:31:                push(@seqs,AST::Seq->new(stmts=>[])) if $stmt;
+.build/EMIfgl6zUZ/lib/Mildew/Frontend/M0ld.pm:35:                push(@{$seqs[-1]->stmts},AST::Goto->new(block=>$seqs{$stmt->{goto}}));
+.build/EMIfgl6zUZ/lib/Mildew/Frontend/M0ld.pm:37:                push(@{$seqs[-1]->stmts},AST::Branch->new(
+.build/EMIfgl6zUZ/lib/Mildew/Frontend/M0ld.pm:47:        AST::Block::Simplified->new(stmts=>\@seqs,regs=>$REGS);
+.build/EMIfgl6zUZ/lib/Mildew/Frontend/M0ld.pm:80:        $MATCH = AST::Call->new(
+.build/EMIfgl6zUZ/lib/Mildew/Frontend/M0ld.pm:82:            capture=>AST::Capture->new(
+.build/EMIfgl6zUZ/lib/Mildew/Frontend/M0ld.pm:84:                positional => [grep { ! $_->isa('AST::Pair') } @{$MATCH{argument}}],
+.build/EMIfgl6zUZ/lib/Mildew/Frontend/M0ld.pm:85:                named => [map { $_->key, $_->value } grep { $_->isa('AST::Pair') } @{$MATCH{argument}}]
+.build/EMIfgl6zUZ/lib/Mildew/Frontend/M0ld.pm:92:    (?{ $MATCH = AST::Assign->new(lvalue=>$MATCH{register},rvalue=>$MATCH{rvalue}) })
+.build/EMIfgl6zUZ/lib/Mildew/Frontend/M0ld.pm:105:    (?{$MATCH = AST::Pair->new(key=>$MATCH{key},value=>$MATCH{val})})
+.build/EMIfgl6zUZ/lib/Mildew/Frontend/M0ld.pm:128:    (?{$MATCH = AST::IntegerConstant->new(value=>$+)})
+.build/EMIfgl6zUZ/lib/Mildew/Frontend/M0ld.pm:132:    (?{$MATCH = AST::Reg->new(name=>$+)})
+.build/EMIfgl6zUZ/lib/Mildew/Frontend/M0ld.pm:140:    (?{$MATCH = AST::StringConstant->new(value=>join('',@{$MATCH{string_part}}))})
+.build/EMIfgl6zUZ/lib/Mildew/Frontend/STD/Cached.pm:20:            # generating the missing VAST classes
+.build/EMIfgl6zUZ/lib/Mildew/Frontend/STD/Cached.pm:28:            return $parse->{VAST};
+.build/EMIfgl6zUZ/lib/Mildew/Frontend/STD/Cached.pm:31:        # we need to duplicate the calls to gen_class before we can use the AST
+.build/EMIfgl6zUZ/lib/Mildew/Frontend/STD/Cached.pm:45:        $self->cache->set($checksum,{ORIG=>$::ORIG,VAST=>$vast,gen_class=>\@gen_class});
+.build/EMIfgl6zUZ/lib/Mildew/SSA.pm:46:    if ($value->isa('AST::Call')) {
+.build/EMIfgl6zUZ/lib/Mildew/SSA.pm:47:        AST::Call->new(identifier=>transform_stmt($callbacks,$value->identifier),capture=>transform_stmt($callbacks,$value->capture));
+.build/EMIfgl6zUZ/lib/Mildew/SSA.pm:48:    } elsif ($value->isa('AST::Capture')) {
+.build/EMIfgl6zUZ/lib/Mildew/SSA.pm:49:        AST::Capture->new(
+.build/EMIfgl6zUZ/lib/Mildew/SSA.pm:55:    } elsif ($value->isa('AST::Assign')) {
+.build/EMIfgl6zUZ/lib/Mildew/SSA.pm:56:        AST::Assign->new(lvalue=>transform_stmt($callbacks,$value->lvalue),rvalue=>transform_stmt($callbacks,$value->rvalue));
+.build/EMIfgl6zUZ/lib/Mildew/SSA.pm:57:    } elsif ($value->isa('AST::InferredTypeTest')) {
+.build/EMIfgl6zUZ/lib/Mildew/SSA.pm:58:        AST::InferredTypeTest->new(value=>transform_stmt($callbacks,$value->value),test=>$value->test);
+.build/EMIfgl6zUZ/lib/Mildew/SSA.pm:59:    } elsif ($value->isa('AST::Branch')) {
+.build/EMIfgl6zUZ/lib/Mildew/SSA.pm:60:        AST::Branch->new(then=>$value->then,else=>$value->else,cond=>transform_stmt($callbacks,$value->cond));
+.build/EMIfgl6zUZ/lib/Mildew/SSA.pm:77:        my $insert = sub {$alive_regs{$block}->insert(map {$_->name} grep {$_->isa('AST::Reg')} @_)};
+.build/EMIfgl6zUZ/lib/Mildew/SSA.pm:79:            if ($stmt->isa('AST::Assign')) {
+.build/EMIfgl6zUZ/lib/Mildew/SSA.pm:80:                if ($stmt->rvalue->isa('AST::Call')) {
+.build/EMIfgl6zUZ/lib/Mildew/SSA.pm:83:                } elsif ($stmt->rvalue->isa('AST::InferredTypeTest')) {
+.build/EMIfgl6zUZ/lib/Mildew/SSA.pm:88:            } elsif ($stmt->isa('AST::Branch')) {
+.build/EMIfgl6zUZ/lib/Mildew/SSA.pm:89:                $alive_regs{$block}->insert($stmt->cond->name) if $stmt->cond->isa('AST::Reg');
+.build/EMIfgl6zUZ/lib/Mildew/SSA.pm:190:        $regs{$blocks->[0]}{$reg} = AST::Reg->new(
+.build/EMIfgl6zUZ/lib/Mildew/SSA.pm:199:            if ($stmt->isa('AST::Assign')) {
+.build/EMIfgl6zUZ/lib/Mildew/SSA.pm:201:                my $reg = AST::Reg->new(
+.build/EMIfgl6zUZ/lib/Mildew/SSA.pm:206:                $stmt = AST::Assign->new(lvalue=>$reg,rvalue=>$stmt->rvalue);
+.build/EMIfgl6zUZ/lib/Mildew/SSA.pm:223:                    my $new_reg = AST::Reg->new(name=>$reg."_".++$unique{$reg},real_name=>$reg);
+.build/EMIfgl6zUZ/lib/Mildew/SSA.pm:225:                    unshift @{$block->stmts},AST::Assign->new(lvalue=>$new_reg,rvalue=>AST::Phi->new(regs=>\@phi));
+.build/EMIfgl6zUZ/lib/Mildew/SSA.pm:236:                'AST::Reg'   => sub {
+.build/EMIfgl6zUZ/lib/Mildew/SSA.pm:241:                        my $new_reg = AST::Reg->new(real_name=>$reg->name,name=>$reg->name);
+.build/EMIfgl6zUZ/lib/Mildew/SSA.pm:252:                'AST::Block' => sub {
+.build/EMIfgl6zUZ/lib/Mildew/SSA.pm:266:            if ($stmt->isa('AST::Assign')) {
+.build/EMIfgl6zUZ/lib/Mildew/SSA.pm:273:            if ($stmt->isa('AST::Assign')) {
+.build/EMIfgl6zUZ/lib/Mildew/SSA.pm:274:                if ($stmt->rvalue->isa('AST::Call')) {
+.build/EMIfgl6zUZ/lib/Mildew/SSA.pm:277:                        next unless $reg->isa('AST::Reg');
+.build/EMIfgl6zUZ/lib/Mildew/SSA.pm:297:    AST::Block::SSA->new(regs=>$mold->regs,stmts=>\@blocks); 
+.build/EMIfgl6zUZ/lib/Mildew/SSA.pm:304:            if ($_->isa('AST::Assign') && $_->rvalue->isa('AST::Phi')) {
+.build/EMIfgl6zUZ/lib/Mildew/SSA.pm:318:                'AST::Reg' => sub {
+.build/EMIfgl6zUZ/lib/Mildew/SSA.pm:320:                    $unssa{$reg} ? AST::Reg->new(name=>$reg->real_name) : $reg;
+.build/EMIfgl6zUZ/lib/Mildew/SSA.pm:322:                'AST::Block' => sub {
+.build/EMIfgl6zUZ/lib/Mildew/SSA.pm:355:            if ($stmt->isa('AST::Goto')) {
+.build/EMIfgl6zUZ/lib/Mildew/SSA.pm:357:            } elsif ($stmt->isa('AST::Branch')) {
+.build/EMIfgl6zUZ/lib/Mildew/SSA.pm:367:        if ($_->isa('AST::Seq')) {
+.build/EMIfgl6zUZ/lib/Mildew/SSA.pm:369:                my $block = AST::Seq->new(stmts=>[],id=>$_->id);
+.build/EMIfgl6zUZ/lib/Mildew/SSA.pm:376:                push (@{$blocks},AST::Seq->new(stmts=>[],id=>'start'));
+.build/EMIfgl6zUZ/lib/Mildew/Backend/Gtk.pm:31:This backend displays the AST using Forest::Gtk2
+.build/EMIfgl6zUZ/lib/Mildew/Backend/Perlesque.pm:19:            if ($_[0]->isa('AST::Reg')) {
+.build/EMIfgl6zUZ/lib/Mildew/Backend/Perlesque.pm:22:            } elsif ($_[0]->isa('AST::IntegerConstant')) {
+.build/EMIfgl6zUZ/lib/Mildew/Backend/Perlesque.pm:24:            } elsif ($_[0]->isa('AST::StringConstant')) {
+.build/EMIfgl6zUZ/lib/Mildew/Backend/Perlesque.pm:34:#            if ($_[0]->isa('AST::Reg')) {
+.build/EMIfgl6zUZ/lib/Mildew/Backend/Perlesque.pm:44:#            } elsif ($_[0]->isa('AST::Block::SSA')) {
+.build/EMIfgl6zUZ/lib/Mildew/Backend/Perlesque.pm:58:                if ($stmt->isa('AST::Goto')) {
+.build/EMIfgl6zUZ/lib/Mildew/Backend/Perlesque.pm:61:                } elsif ($stmt->isa('AST::Branch')) {
+.build/EMIfgl6zUZ/lib/Mildew/Backend/Perlesque.pm:70:                } elsif ($stmt->isa('AST::Reg')) {
+.build/EMIfgl6zUZ/lib/Mildew/Backend/Perlesque.pm:72:                } elsif ($stmt->isa('AST::Assign')) {
+.build/EMIfgl6zUZ/lib/Mildew/Backend/Perlesque.pm:73:                    if ($stmt->rvalue->isa('AST::Call')) {
+.build/EMIfgl6zUZ/lib/Mildew/Backend/Perlesque.pm:77:                    } elsif ($stmt->rvalue->isa('AST::Phi')) {
+.build/EMIfgl6zUZ/lib/Mildew/Backend/Perlesque.pm:79:                    } elsif ($stmt->rvalue->isa('AST::InferredTypeTest')) {
+.build/EMIfgl6zUZ/lib/Mildew/Backend/Perlesque.pm:82:                        #$code .= Emit::Yeast::assign($value->($stmt->lvalue),$value->(AST::IntegerConstant->new(value=>eval($stmt->rvalue->test) ? 1 : 0)));
+.build/EMIfgl6zUZ/lib/Mildew/Backend/DumpAST.pm:3:class Mildew::Backend::DumpAST with Mildew::Backend {
+.build/EMIfgl6zUZ/lib/Mildew/Backend/DumpAST.pm:17:Mildew::Backend::DumpAST
+.build/EMIfgl6zUZ/lib/Mildew/Backend/DumpAST.pm:21:This backend prints out the AST in a format specified by the closure.
+.build/EMIfgl6zUZ/lib/Mildew/Backend/C/So.pm:7:    use AST;
+.build/EMIfgl6zUZ/lib/Mildew/Backend/C/So.pm:8:    use AST::Helpers;
+.build/EMIfgl6zUZ/lib/Mildew/Backend/C/So.pm:27:        AST::Block->new(
+.build/EMIfgl6zUZ/lib/Mildew/Backend/C/So.pm:30:                    AST::Assign->new(lvalue=>reg '$YOU_ARE_HERE',rvalue=>reg '$scope'),
+.build/EMIfgl6zUZ/lib/Mildew/Backend/OptC.pm:89:            if ($_[0]->isa('AST::Reg')) {
+.build/EMIfgl6zUZ/lib/Mildew/Backend/OptC.pm:99:            } elsif ($_[0]->isa('AST::StringConstant')) {
+.build/EMIfgl6zUZ/lib/Mildew/Backend/OptC.pm:105:            } elsif ($_[0]->isa('AST::IntegerConstant')) {
+.build/EMIfgl6zUZ/lib/Mildew/Backend/OptC.pm:107:            } elsif ($_[0]->isa('AST::Block::SSA')) {
+.build/EMIfgl6zUZ/lib/Mildew/Backend/OptC.pm:123:                if ($stmt->isa('AST::Assign')) {
+.build/EMIfgl6zUZ/lib/Mildew/Backend/OptC.pm:125:                    if ($stmt->rvalue->isa('AST::Call') && defined $Mildew::profile_info) {
+.build/EMIfgl6zUZ/lib/Mildew/Backend/OptC.pm:145:                if ($stmt->isa('AST::Goto')) {
+.build/EMIfgl6zUZ/lib/Mildew/Backend/OptC.pm:147:                } elsif ($stmt->isa('AST::Branch')) {
+.build/EMIfgl6zUZ/lib/Mildew/Backend/OptC.pm:155:                } elsif ($stmt->isa('AST::Reg')) {
+.build/EMIfgl6zUZ/lib/Mildew/Backend/OptC.pm:158:                } elsif ($stmt->isa('AST::Assign')) {
+.build/EMIfgl6zUZ/lib/Mildew/Backend/OptC.pm:159:                    if ($stmt->rvalue->isa('AST::Call')) {
+.build/EMIfgl6zUZ/lib/Mildew/Backend/OptC.pm:167:                    } elsif ($stmt->rvalue->isa('AST::Phi')) {
+.build/EMIfgl6zUZ/lib/Mildew/Backend/OptC.pm:170:                    } elsif ($stmt->rvalue->isa('AST::InferredTypeTest')) {
+.build/EMIfgl6zUZ/lib/Mildew/Backend/OptC.pm:172:                        $code .= Mildew::Emit::Yeast::assign($value->($stmt->lvalue),"SMOP_REFERENCE(interpreter,".$value->(AST::IntegerConstant->new(value=>eval($stmt->rvalue->test) ? 1 : 0).")"));
+.build/EMIfgl6zUZ/lib/Mildew/Backend/C.pm:4:    use AST;
+.build/EMIfgl6zUZ/lib/Mildew/Backend/C.pm:5:    use AST::Helpers;
+.build/EMIfgl6zUZ/lib/Mildew/Backend/C.pm:30:        AST::Block->new(regs=>['interpreter','scope'],stmts=>[fcall(call(new => FETCH(lookup('Code')),[],[string 'outer'=>($scope // reg '$scope'),string 'signature'=>empty_sig(),string 'mold' => $ast]))]);
+.build/EMIfgl6zUZ/lib/VAST.pm:5:    package VAST;
+.build/EMIfgl6zUZ/lib/VAST.pm:6:    use Module::Pluggable sub_name=>"subclasses",search_path=>["VAST"],require=>1;
+.build/EMIfgl6zUZ/lib/VAST.pm:7:    # load all the VAST::* subclasses
+.build/EMIfgl6zUZ/lib/VAST.pm:8:    VAST->subclasses;
+.build/EMIfgl6zUZ/lib/VAST.pm:10:class VAST::Base {
+.build/EMIfgl6zUZ/lib/VAST.pm:12:        use AST::Helpers;
+.build/EMIfgl6zUZ/lib/VAST/statement_control__S_unless.pm:4:class VAST::statement_control__S_unless {
+.build/EMIfgl6zUZ/lib/VAST/statement_control__S_unless.pm:5:    use AST::Helpers;
+.build/EMIfgl6zUZ/lib/VAST/statement_control__S_unless.pm:8:        AST::If->new
+.build/EMIfgl6zUZ/lib/VAST/infix__S_ColonEqual.pm:3:class VAST::infix__S_ColonEqual {
+.build/EMIfgl6zUZ/lib/VAST/infix__S_ColonEqual.pm:4:    use AST::Helpers;
+.build/EMIfgl6zUZ/lib/VAST/nibbler.pm:2:class VAST::nibbler {
+.build/EMIfgl6zUZ/lib/VAST/nibbler.pm:4:    use AST::Helpers;
+.build/EMIfgl6zUZ/lib/VAST/blockoid.pm:1:package VAST::blockoid;
+.build/EMIfgl6zUZ/lib/VAST/blockoid.pm:5:use AST::Helpers;
+.build/EMIfgl6zUZ/lib/VAST/blockoid.pm:10:    AST::Block->new(regs=>['interpreter','scope'],stmts=>trailing_return($m->{statementlist}->emit_m0ld));
+.build/EMIfgl6zUZ/lib/VAST/circumfix__S_Cur_Ly.pm:4:class VAST::circumfix__S_Cur_Ly {
+.build/EMIfgl6zUZ/lib/VAST/circumfix__S_Cur_Ly.pm:5:    use AST::Helpers;
+.build/EMIfgl6zUZ/lib/VAST/postcircumfix__S_Bra_Ket.pm:4:class VAST::postcircumfix__S_Bra_Ket {
+.build/EMIfgl6zUZ/lib/VAST/postcircumfix__S_Bra_Ket.pm:5:    use AST::Helpers;
+.build/EMIfgl6zUZ/lib/VAST/arglist.pm:1:package VAST::arglist;
+.build/EMIfgl6zUZ/lib/VAST/arglist.pm:5:use AST::Helpers;
+.build/EMIfgl6zUZ/lib/VAST/statement_control__S_no.pm:4:class VAST::statement_control__S_no {
+.build/EMIfgl6zUZ/lib/VAST/statement_control__S_no.pm:5:    use AST::Helpers;
+.build/EMIfgl6zUZ/lib/VAST/infix__S_Equal.pm:3:class VAST::infix__S_Equal {
+.build/EMIfgl6zUZ/lib/VAST/infix__S_Equal.pm:4:    use AST::Helpers;
+.build/EMIfgl6zUZ/lib/VAST/statement_control__S_use.pm:4:class VAST::statement_control__S_use {
+.build/EMIfgl6zUZ/lib/VAST/statement_control__S_use.pm:5:    use AST::Helpers;
+.build/EMIfgl6zUZ/lib/VAST/longname.pm:2:class VAST::longname {
+.build/EMIfgl6zUZ/lib/VAST/longname.pm:4:    use AST::Helpers;
+.build/EMIfgl6zUZ/lib/VAST/signature.pm:1:package VAST::signature;
+.build/EMIfgl6zUZ/lib/VAST/signature.pm:5:use AST::Helpers;
+.build/EMIfgl6zUZ/lib/VAST/signature.pm:27:    AST::Call->new
+.build/EMIfgl6zUZ/lib/VAST/signature.pm:29:          capture => AST::Capture->new
+.build/EMIfgl6zUZ/lib/VAST/signature.pm:33:            [ string 'BIND' => AST::Block->new
+.build/EMIfgl6zUZ/lib/VAST/signature.pm:48:        AST::Seq->new(stmts => [
+.build/EMIfgl6zUZ/lib/VAST/signature.pm:63:        AST::Seq->new(stmts => $stmts);
+.build/EMIfgl6zUZ/lib/VAST/scope_declarator__S_has.pm:4:class VAST::scope_declarator__S_has {
+.build/EMIfgl6zUZ/lib/VAST/scope_declarator__S_has.pm:5:    use AST::Helpers;
+.build/EMIfgl6zUZ/lib/VAST/scope_declarator__S_has.pm:11:    		       desigilname => $var_decl->{variable}{desigilname} }, 'VAST::variable';
+.build/EMIfgl6zUZ/lib/VAST/scope_declarator__S_has.pm:13:        my $sig = AST::Call->new
+.build/EMIfgl6zUZ/lib/VAST/scope_declarator__S_has.pm:15:              capture => AST::Capture->new
+.build/EMIfgl6zUZ/lib/VAST/scope_declarator__S_has.pm:19:                [ string 'BIND' => AST::Block->new
+.build/EMIfgl6zUZ/lib/VAST/scope_declarator__S_has.pm:27:    	   AST::Block->new(regs => ['interpreter','scope'],
+.build/EMIfgl6zUZ/lib/VAST/scope_declarator__S_has.pm:48:    	AST::Seq->new(stmts => [
+.build/EMIfgl6zUZ/lib/VAST/scope_declarator__S_has.pm:74:	    AST::Seq->new
+.build/EMIfgl6zUZ/lib/VAST/statement_control__S_CONTROL.pm:8:class VAST::statement_control__S_CONTROL {
+.build/EMIfgl6zUZ/lib/VAST/statement_control__S_CONTROL.pm:9:    use AST::Helpers;
+.build/EMIfgl6zUZ/lib/VAST/statement_control__S_while.pm:4:class VAST::statement_control__S_while {
+.build/EMIfgl6zUZ/lib/VAST/statement_control__S_while.pm:5:    use AST::Helpers;
+.build/EMIfgl6zUZ/lib/VAST/statement_control__S_while.pm:7:        AST::While->new(cond => $self->{xblock}{EXPR}->emit_m0ld, body => call('postcircumfix:( )',code($self->{xblock}{pblock}{blockoid}),[capturize([])]));
+.build/EMIfgl6zUZ/lib/VAST/infix__S_VertVert.pm:3:class VAST::infix__S_VertVert {
+.build/EMIfgl6zUZ/lib/VAST/infix__S_VertVert.pm:4:    use AST::Helpers;
+.build/EMIfgl6zUZ/lib/VAST/infix__S_VertVert.pm:8:            AST::If->new(cond => $left,then => $left,else => $self->{args}[1]->emit_m0ld);
+.build/EMIfgl6zUZ/lib/VAST/postcircumfix__S_Lt_Gt.pm:4:class VAST::postcircumfix__S_Lt_Gt {
+.build/EMIfgl6zUZ/lib/VAST/postcircumfix__S_Lt_Gt.pm:5:    use AST::Helpers;
+.build/EMIfgl6zUZ/lib/VAST/escape__S_Dollar.pm:4:class VAST::escape__S_Dollar {
+.build/EMIfgl6zUZ/lib/VAST/escape__S_Dollar.pm:5:    use AST::Helpers;
+.build/EMIfgl6zUZ/lib/VAST/parameter.pm:1:package VAST::parameter;
+.build/EMIfgl6zUZ/lib/VAST/parameter.pm:5:use AST::Helpers;
+.build/EMIfgl6zUZ/lib/VAST/parameter.pm:62:                [ string 'mold' => AST::Block->new(regs=>['interpreter','scope'],stmts=>
+.build/EMIfgl6zUZ/lib/VAST/parameter.pm:68:        AST::Seq->new(stmts => [
+.build/EMIfgl6zUZ/lib/VAST/args.pm:1:package VAST::args;
+.build/EMIfgl6zUZ/lib/VAST/args.pm:5:use AST::Helpers;
+.build/EMIfgl6zUZ/lib/VAST/variable.pm:2:class VAST::variable {
+.build/EMIfgl6zUZ/lib/VAST/variable.pm:4:    use AST::Helpers;
+.build/EMIfgl6zUZ/lib/VAST/statementlist.pm:1:package VAST::statementlist;
+.build/EMIfgl6zUZ/lib/VAST/statementlist.pm:5:use AST::Helpers;
+.build/EMIfgl6zUZ/lib/VAST/Str.pm:4:class VAST::Str {
+.build/EMIfgl6zUZ/lib/VAST/Str.pm:5:    use AST::Helpers;
+.build/EMIfgl6zUZ/lib/VAST/scope_declarator__S_our.pm:3:class VAST::scope_declarator__S_our {
+.build/EMIfgl6zUZ/lib/VAST/scope_declarator__S_our.pm:4:    use AST::Helpers;
+.build/EMIfgl6zUZ/lib/VAST/infix__S_AmpAmp.pm:3:class VAST::infix__S_AmpAmp {
+.build/EMIfgl6zUZ/lib/VAST/infix__S_AmpAmp.pm:4:    use AST::Helpers;
+.build/EMIfgl6zUZ/lib/VAST/infix__S_AmpAmp.pm:8:            AST::If->new(cond => $left,then => $self->{args}[1]->emit_m0ld,else => $left);
+.build/EMIfgl6zUZ/lib/VAST/circumfix__S_Paren_Thesis.pm:3:class VAST::circumfix__S_Paren_Thesis {
+.build/EMIfgl6zUZ/lib/VAST/circumfix__S_Paren_Thesis.pm:4:    use AST::Helpers;
+.build/EMIfgl6zUZ/lib/VAST/term__S_colonpair.pm:4:class VAST::term__S_colonpair {
+.build/EMIfgl6zUZ/lib/VAST/term__S_colonpair.pm:5:    use AST::Helpers;
+.build/EMIfgl6zUZ/lib/VAST/integer.pm:2:class VAST::integer {
+.build/EMIfgl6zUZ/lib/VAST/integer.pm:3:    use AST::Helpers;
+.build/EMIfgl6zUZ/lib/VAST/statement_prefix__S_do.pm:4:class VAST::statement_prefix__S_do {
+.build/EMIfgl6zUZ/lib/VAST/statement_prefix__S_do.pm:5:    use AST::Helpers;
+.build/EMIfgl6zUZ/lib/VAST/statement_control__S_CATCH.pm:8:class VAST::statement_control__S_CATCH {
+.build/EMIfgl6zUZ/lib/VAST/statement_control__S_CATCH.pm:9:    use AST::Helpers;
+.build/EMIfgl6zUZ/lib/VAST/colonpair.pm:1:package VAST::colonpair;
+.build/EMIfgl6zUZ/lib/VAST/colonpair.pm:6:use AST::Helpers;
+.build/EMIfgl6zUZ/lib/VAST/colonpair.pm:18:    if (ref $m->{v}{circumfix} eq 'VAST::circumfix__S_Paren_Thesis') {
+.build/EMIfgl6zUZ/lib/VAST/colonpair.pm:20:    } elsif (ref $m->{v}{circumfix} eq 'VAST::circumfix__S_Lt_Gt') {
+.build/EMIfgl6zUZ/lib/VAST/colonpair.pm:25:    AST::Pair->new(key => $key, value => $value);
+.build/EMIfgl6zUZ/lib/VAST/postfix__S_PlusPlus.pm:3:class VAST::postfix__S_PlusPlus {
+.build/EMIfgl6zUZ/lib/VAST/postfix__S_PlusPlus.pm:4:    use AST::Helpers;
+.build/EMIfgl6zUZ/lib/VAST/sublongname.pm:2:class VAST::sublongname {
+.build/EMIfgl6zUZ/lib/VAST/sublongname.pm:4:    use AST::Helpers;
+.build/EMIfgl6zUZ/lib/VAST/comp_unit.pm:1:package VAST::comp_unit;
+.build/EMIfgl6zUZ/lib/VAST/comp_unit.pm:5:use AST::Helpers;
+.build/EMIfgl6zUZ/lib/VAST/comp_unit.pm:9:    AST::Block->new(regs=>['interpreter','scope'],stmts=>$m->{statementlist}->emit_m0ld);
+.build/EMIfgl6zUZ/lib/VAST/prefix__S_PlusPlus.pm:3:class VAST::prefix__S_PlusPlus {
+.build/EMIfgl6zUZ/lib/VAST/prefix__S_PlusPlus.pm:4:    use AST::Helpers;
+.build/EMIfgl6zUZ/lib/VAST/term__S_self.pm:4:class VAST::term__S_self {
+.build/EMIfgl6zUZ/lib/VAST/term__S_self.pm:5:    use AST::Helpers;
+.build/EMIfgl6zUZ/lib/VAST/postcircumfix__S_Paren_Thesis.pm:4:class VAST::postcircumfix__S_Paren_Thesis {
+.build/EMIfgl6zUZ/lib/VAST/postcircumfix__S_Paren_Thesis.pm:5:    use AST::Helpers;
+.build/EMIfgl6zUZ/lib/VAST/postcircumfix__S_Paren_Thesis.pm:8:        if ($self->{arg}->isa('VAST::term__S_name')) {
+.build/EMIfgl6zUZ/lib/VAST/routine_def.pm:1:package VAST::routine_def;
+.build/EMIfgl6zUZ/lib/VAST/routine_def.pm:5:use AST::Helpers;
+.build/EMIfgl6zUZ/lib/VAST/routine_def.pm:52:	AST::Seq->new(stmts => [
+.build/EMIfgl6zUZ/lib/VAST/dotty__S_DotStar.pm:3:class VAST::dotty__S_DotStar {
+.build/EMIfgl6zUZ/lib/VAST/dotty__S_DotStar.pm:4:    use AST::Helpers;
+.build/EMIfgl6zUZ/lib/VAST/postcircumfix__S_Cur_Ly.pm:4:class VAST::postcircumfix__S_Cur_Ly {
+.build/EMIfgl6zUZ/lib/VAST/postcircumfix__S_Cur_Ly.pm:5:    use AST::Helpers;
+.build/EMIfgl6zUZ/lib/VAST/fatarrow.pm:1:package VAST::fatarrow;
+.build/EMIfgl6zUZ/lib/VAST/fatarrow.pm:5:use AST::Helpers;
+.build/EMIfgl6zUZ/lib/VAST/fatarrow.pm:9:    AST::Pair->new(key => $m->{key}->emit_m0ld, value => $m->{val}->emit_m0ld);
+.build/EMIfgl6zUZ/lib/VAST/statement.pm:2:package VAST::statement;
+.build/EMIfgl6zUZ/lib/VAST/statement.pm:7:use AST::Helpers;
+.build/EMIfgl6zUZ/lib/VAST/statement.pm:13:        AST::Label->new(label=>label($m->{label}),stmt=>statement($m->{statement}));
+.build/EMIfgl6zUZ/lib/VAST/statement.pm:16:    } elsif ($m->{EXPR} && $m->{EXPR}{circumfix} && $m->{EXPR}{circumfix}->isa('VAST::circumfix__S_Cur_Ly')) {
+.build/EMIfgl6zUZ/lib/VAST/identifier.pm:4:class VAST::identifier {
+.build/EMIfgl6zUZ/lib/VAST/identifier.pm:5:    use AST::Helpers;
+.build/EMIfgl6zUZ/lib/VAST/statement_control__S_until.pm:4:class VAST::statement_control__S_until {
+.build/EMIfgl6zUZ/lib/VAST/statement_control__S_until.pm:5:    use AST::Helpers;
+.build/EMIfgl6zUZ/lib/VAST/statement_control__S_until.pm:7:        AST::While->new(cond => fcall('&not' => [$self->{xblock}{EXPR}->emit_m0ld]), body => call('postcircumfix:( )',code($self->{xblock}{pblock}{blockoid}),[capturize([])])); 
+.build/EMIfgl6zUZ/lib/VAST/package_declarator.pm:3:class VAST::package_declarator {
+.build/EMIfgl6zUZ/lib/VAST/package_declarator.pm:4:    use AST::Helpers;
+.build/EMIfgl6zUZ/lib/VAST/package_declarator.pm:7:        my $id_type_sub = AST::unique_id;
+.build/EMIfgl6zUZ/lib/VAST/package_declarator.pm:20:        my $mold = AST::Block->new(regs => $init->regs,stmts => [
+.build/EMIfgl6zUZ/lib/VAST/package_declarator.pm:25:                    AST::Seq->new(stmts => [
+.build/EMIfgl6zUZ/lib/VAST/package_declarator.pm:33:    			AST::Seq->new(stmts => [
+.build/EMIfgl6zUZ/lib/VAST/package_declarator.pm:44:    			     call(new => FETCH(lookup('Code')),[],[string 'outer'=>reg '$scope',,string 'signature'=>empty_sig(),string 'mold' => AST::Block->new(regs=>['interpreter','scope'],stmts=>trailing_return([lookup('$?CLASS')]))])
+.build/EMIfgl6zUZ/lib/VAST/escape__S_Back.pm:4:class VAST::escape__S_Back {
+.build/EMIfgl6zUZ/lib/VAST/escape__S_Back.pm:5:    use AST::Helpers;
+.build/EMIfgl6zUZ/lib/VAST/escape__S_Back.pm:8:        if ($self->{item}->isa('VAST::backslash__S_stopper')) {
+.build/EMIfgl6zUZ/lib/VAST/escape__S_Back.pm:11:        if ($self->{item}->isa('VAST::backslash__S_Back')) {
+.build/EMIfgl6zUZ/lib/VAST/package_declarator__S_module.pm:4:class VAST::package_declarator__S_module {
+.build/EMIfgl6zUZ/lib/VAST/package_declarator__S_module.pm:5:    use AST::Helpers;
+.build/EMIfgl6zUZ/lib/VAST/package_declarator__S_module.pm:8:        my $id_type_sub = AST::unique_id;
+.build/EMIfgl6zUZ/lib/VAST/package_declarator__S_module.pm:12:            return AST::Seq->new(stmts=>$self->{package_def}{statementlist}->emit_m0ld);
+.build/EMIfgl6zUZ/lib/VAST/package_declarator__S_module.pm:16:        my $mold = AST::Block->new(regs => $init->regs,stmts => [
+.build/EMIfgl6zUZ/lib/VAST/package_declarator__S_module.pm:19:    	    AST::Seq->new(stmts => [
+.build/EMIfgl6zUZ/lib/VAST/package_declarator__S_module.pm:25:    			AST::Seq->new(stmts => [
+.build/EMIfgl6zUZ/lib/VAST/dotty__S_Dot.pm:3:class VAST::dotty__S_Dot {
+.build/EMIfgl6zUZ/lib/VAST/dotty__S_Dot.pm:4:    use AST::Helpers;
+.build/EMIfgl6zUZ/lib/VAST/Chaining.pm:3:class VAST::Chaining {
+.build/EMIfgl6zUZ/lib/VAST/Chaining.pm:4:    use AST::Helpers;
+.build/EMIfgl6zUZ/lib/VAST/infix__S_Comma.pm:2:class VAST::infix__S_Comma {
+.build/EMIfgl6zUZ/lib/VAST/infix__S_Comma.pm:3:    use AST::Helpers;
+.build/EMIfgl6zUZ/lib/VAST/term__S_identifier.pm:3:class VAST::term__S_identifier {
+.build/EMIfgl6zUZ/lib/VAST/term__S_identifier.pm:4:    use AST::Helpers;
+.build/EMIfgl6zUZ/lib/VAST/term__S_identifier.pm:10:            if ($args[1]->isa('AST::StringConstant')) {
+.build/EMIfgl6zUZ/lib/VAST/term__S_identifier.pm:11:                fcall '&ok' => [AST::InferredTypeTest->new(value=>$args[0],test=>$args[1]->value)]; 
+.build/EMIfgl6zUZ/lib/VAST/multi_declarator__S_multi.pm:1:package VAST::multi_declarator__S_multi;
+.build/EMIfgl6zUZ/lib/VAST/multi_declarator__S_multi.pm:5:use AST::Helpers;
+.build/EMIfgl6zUZ/lib/VAST/multi_declarator__S_multi.pm:15:            if ($colonpair->{coloncircumfix}{circumfix}->isa('VAST::circumfix__S_Lt_Gt')) {
+.build/EMIfgl6zUZ/lib/VAST/multi_declarator__S_multi.pm:25:    my $ret = AST::Seq->new(stmts=>[
+.build/EMIfgl6zUZ/lib/VAST/statement_control__S_if.pm:3:class VAST::statement_control__S_if {
+.build/EMIfgl6zUZ/lib/VAST/statement_control__S_if.pm:4:    use AST::Helpers;
+.build/EMIfgl6zUZ/lib/VAST/statement_control__S_if.pm:22:                push @elsif, AST::If->new
+.build/EMIfgl6zUZ/lib/VAST/statement_control__S_if.pm:28:        AST::If->new
+.build/EMIfgl6zUZ/lib/VAST/method_def.pm:1:package VAST::method_def;
+.build/EMIfgl6zUZ/lib/VAST/method_def.pm:5:use AST::Helpers;
+.build/EMIfgl6zUZ/lib/VAST/statement_control__S_for.pm:4:class VAST::statement_control__S_for {
+.build/EMIfgl6zUZ/lib/VAST/statement_control__S_for.pm:5:    use AST::Helpers;
+.build/EMIfgl6zUZ/lib/VAST/prefix__S_Vert.pm:4:class VAST::prefix__S_Vert {
+.build/EMIfgl6zUZ/lib/VAST/prefix__S_Vert.pm:5:    use AST::Helpers;
+.build/EMIfgl6zUZ/lib/VAST/scope_declarator__S_my.pm:3:class VAST::scope_declarator__S_my {
+.build/EMIfgl6zUZ/lib/VAST/scope_declarator__S_my.pm:4:    use AST::Helpers;
+.build/EMIfgl6zUZ/lib/VAST/semiarglist.pm:1:package VAST::semiarglist;
+.build/EMIfgl6zUZ/lib/VAST/semiarglist.pm:5:use AST::Helpers;
+.build/EMIfgl6zUZ/lib/VAST/statement_control__S_loop.pm:4:class VAST::statement_control__S_loop {
+.build/EMIfgl6zUZ/lib/VAST/statement_control__S_loop.pm:5:    use AST::Helpers;
+.build/EMIfgl6zUZ/lib/VAST/statement_control__S_loop.pm:7:        AST::Loop->new(code => call('postcircumfix:( )',code($self->{block}),[capturize([])]));
+.build/EMIfgl6zUZ/lib/VAST/term__S_name.pm:4:class VAST::term__S_name {
+.build/EMIfgl6zUZ/lib/VAST/term__S_name.pm:5:    use AST::Helpers;
+.build/EMIfgl6zUZ/lib/VAST/term__S_YOU_ARE_HERE.pm:4:class VAST::term__S_YOU_ARE_HERE {
+.build/EMIfgl6zUZ/lib/VAST/term__S_YOU_ARE_HERE.pm:5:    use AST::Helpers;
+.build/EMIfgl6zUZ/lib/VAST/term__S_YOU_ARE_HERE.pm:8:        AST::Assign->new(lvalue=>reg '$YOU_ARE_HERE',rvalue=>call clone=>reg '$scope');
+.build/EMIfgl6zUZ/t/m0ld.t:3:use AST;
+.build/EMIfgl6zUZ/t/m0ld.t:19:isa_ok($ast,'AST::Block');
+.build/EMIfgl6zUZ/t/m0ld.t:21:isa_ok($seq,'AST::Seq');
+.build/EMIfgl6zUZ/t/m0ld.t:22:isa_ok($seq->stmts->[0],'AST::Assign');
+.build/EMIfgl6zUZ/t/m0ld.t:29:isa_ok($ast,'AST::Block');
+.build/EMIfgl6zUZ/t/m0ld.t:30:isa_ok($seq,'AST::Seq');
+.build/EMIfgl6zUZ/t/m0ld.t:31:isa_ok($seq->stmts->[0],'AST::Assign');
+.build/EMIfgl6zUZ/t/m0ld.t:43:isa_ok($ast->stmts->[1]->stmts->[0],'AST::Assign');
+.build/EMIfgl6zUZ/t/m0ld.t:49:isa_ok($ast->stmts->[1]->stmts->[0],'AST::Assign');
+.build/EMIfgl6zUZ/t/m0ld.t:50:isa_ok($ast->stmts->[1]->stmts->[1],'AST::Goto');
+.build/EMIfgl6zUZ/t/m0ld.t:62:isa_ok($ast->stmts->[0]->stmts->[1],'AST::Branch','conditional branch');
+.build/EMIfgl6zUZ/t/m0ld.t:71:isa_ok($ast->stmts->[0]->stmts->[0]->rvalue,'AST::Block','submold');
+.build/EMIfgl6zUZ/t/m0ld.t:72:isa_ok($ast->stmts->[0]->stmts->[0]->rvalue->stmts->[0]->stmts->[0],'AST::Assign','assignment in submold');
+.build/EMIfgl6zUZ/t/ast-helpers.t:3:use AST::Helpers;
+.build/EMIfgl6zUZ/t/ast-helpers.t:4:use AST;
+.build/EMIfgl6zUZ/t/ast-helpers.t:11:isa_ok($integer->[0],'AST::IntegerConstant');
+.build/EMIfgl6zUZ/t/ast-helpers.t:13:isa_ok($integer->[0],'AST::IntegerConstant');
+.build/EMIfgl6zUZ/t/ast-helpers.t:15:my $block = AST::Block->new(stmts=>[integer 45],regs=>['foo']);
+.build/EMIfgl6zUZ/t/ast-helpers.t:17:isa_ok($wrapped,'AST::Block','a wrapped block');
+.build/EMIfgl6zUZ/t/ssa.t:3:use AST;
+.build/EMIfgl6zUZ/t/ssa.t:6:my $empty_block = AST::Block->new(regs=>['interpreter','scope'],stmts=>[]);
+.build/EMIfgl6zUZ/t/simplified.t:3:use AST;
+.build/EMIfgl6zUZ/t/simplified.t:5:my $empty_block = AST::Block->new(regs=>['interpreter','scope'],stmts=>[]);
+.build/EMIfgl6zUZ/t/simplified.t:10:my $branch = AST::Branch->new(cond=>reg '$foo',then=>AST::Block->new(stmts=>[]),else=>AST::Block->new(stmts=>[]));
+.build/EMIfgl6zUZ/t/simplified.t:13:isa_ok($branch_simplified,'AST::Branch');
+.build/EMIfgl6zUZ/Makefile:167:MAN3PODS = lib/Mildew/Backend/DumpAST.pm \
+.build/EMIfgl6zUZ/Makefile:191:TO_INST_PM = lib/AST.pm \
+.build/EMIfgl6zUZ/Makefile:192:	lib/AST/Assign.pm \
+.build/EMIfgl6zUZ/Makefile:193:	lib/AST/Base.pm \
+.build/EMIfgl6zUZ/Makefile:194:	lib/AST/Block.pm \
+.build/EMIfgl6zUZ/Makefile:195:	lib/AST/Block/SSA.pm \
+.build/EMIfgl6zUZ/Makefile:196:	lib/AST/Block/Simplified.pm \
+.build/EMIfgl6zUZ/Makefile:197:	lib/AST/Branch.pm \
+.build/EMIfgl6zUZ/Makefile:198:	lib/AST/Call.pm \
+.build/EMIfgl6zUZ/Makefile:199:	lib/AST/Capture.pm \
+.build/EMIfgl6zUZ/Makefile:200:	lib/AST/Comment.pm \
+.build/EMIfgl6zUZ/Makefile:201:	lib/AST/Goto.pm \
+.build/EMIfgl6zUZ/Makefile:202:	lib/AST/Helpers.pm \
+.build/EMIfgl6zUZ/Makefile:203:	lib/AST/If.pm \
+.build/EMIfgl6zUZ/Makefile:204:	lib/AST/InferredTypeTest.pm \
+.build/EMIfgl6zUZ/Makefile:205:	lib/AST/IntegerConstant.pm \
+.build/EMIfgl6zUZ/Makefile:206:	lib/AST/Let.pm \
+.build/EMIfgl6zUZ/Makefile:207:	lib/AST/Loop.pm \
+.build/EMIfgl6zUZ/Makefile:208:	lib/AST/Pair.pm \
+.build/EMIfgl6zUZ/Makefile:209:	lib/AST/Phi.pm \
+.build/EMIfgl6zUZ/Makefile:210:	lib/AST/Reg.pm \
+.build/EMIfgl6zUZ/Makefile:211:	lib/AST/Seq.pm \
+.build/EMIfgl6zUZ/Makefile:212:	lib/AST/StringConstant.pm \
+.build/EMIfgl6zUZ/Makefile:213:	lib/AST/While.pm \
+.build/EMIfgl6zUZ/Makefile:219:	lib/Mildew/Backend/DumpAST.pm \
+.build/EMIfgl6zUZ/Makefile:230:	lib/VAST.pm \
+.build/EMIfgl6zUZ/Makefile:231:	lib/VAST/Chaining.pm \
+.build/EMIfgl6zUZ/Makefile:232:	lib/VAST/Str.pm \
+.build/EMIfgl6zUZ/Makefile:233:	lib/VAST/arglist.pm \
+.build/EMIfgl6zUZ/Makefile:234:	lib/VAST/args.pm \
+.build/EMIfgl6zUZ/Makefile:235:	lib/VAST/blockoid.pm \
+.build/EMIfgl6zUZ/Makefile:236:	lib/VAST/circumfix__S_Cur_Ly.pm \
+.build/EMIfgl6zUZ/Makefile:237:	lib/VAST/circumfix__S_Paren_Thesis.pm \
+.build/EMIfgl6zUZ/Makefile:238:	lib/VAST/colonpair.pm \
+.build/EMIfgl6zUZ/Makefile:239:	lib/VAST/comp_unit.pm \
+.build/EMIfgl6zUZ/Makefile:240:	lib/VAST/dotty__S_Dot.pm \
+.build/EMIfgl6zUZ/Makefile:241:	lib/VAST/dotty__S_DotStar.pm \
+.build/EMIfgl6zUZ/Makefile:242:	lib/VAST/escape__S_Back.pm \
+.build/EMIfgl6zUZ/Makefile:243:	lib/VAST/escape__S_Dollar.pm \
+.build/EMIfgl6zUZ/Makefile:244:	lib/VAST/fatarrow.pm \
+.build/EMIfgl6zUZ/Makefile:245:	lib/VAST/identifier.pm \
+.build/EMIfgl6zUZ/Makefile:246:	lib/VAST/infix__S_AmpAmp.pm \
+.build/EMIfgl6zUZ/Makefile:247:	lib/VAST/infix__S_ColonEqual.pm \
+.build/EMIfgl6zUZ/Makefile:248:	lib/VAST/infix__S_Comma.pm \
+.build/EMIfgl6zUZ/Makefile:249:	lib/VAST/infix__S_Equal.pm \
+.build/EMIfgl6zUZ/Makefile:250:	lib/VAST/infix__S_VertVert.pm \
+.build/EMIfgl6zUZ/Makefile:251:	lib/VAST/integer.pm \
+.build/EMIfgl6zUZ/Makefile:252:	lib/VAST/longname.pm \
+.build/EMIfgl6zUZ/Makefile:253:	lib/VAST/method_def.pm \
+.build/EMIfgl6zUZ/Makefile:254:	lib/VAST/multi_declarator__S_multi.pm \
+.build/EMIfgl6zUZ/Makefile:255:	lib/VAST/nibbler.pm \
+.build/EMIfgl6zUZ/Makefile:256:	lib/VAST/package_declarator.pm \
+.build/EMIfgl6zUZ/Makefile:257:	lib/VAST/package_declarator__S_module.pm \
+.build/EMIfgl6zUZ/Makefile:258:	lib/VAST/parameter.pm \
+.build/EMIfgl6zUZ/Makefile:259:	lib/VAST/postcircumfix__S_Bra_Ket.pm \
+.build/EMIfgl6zUZ/Makefile:260:	lib/VAST/postcircumfix__S_Cur_Ly.pm \
+.build/EMIfgl6zUZ/Makefile:261:	lib/VAST/postcircumfix__S_Lt_Gt.pm \
+.build/EMIfgl6zUZ/Makefile:262:	lib/VAST/postcircumfix__S_Paren_Thesis.pm \
+.build/EMIfgl6zUZ/Makefile:263:	lib/VAST/postfix__S_PlusPlus.pm \
+.build/EMIfgl6zUZ/Makefile:264:	lib/VAST/prefix__S_PlusPlus.pm \
+.build/EMIfgl6zUZ/Makefile:265:	lib/VAST/prefix__S_Vert.pm \
+.build/EMIfgl6zUZ/Makefile:266:	lib/VAST/routine_def.pm \
+.build/EMIfgl6zUZ/Makefile:267:	lib/VAST/scope_declarator__S_has.pm \
+.build/EMIfgl6zUZ/Makefile:268:	lib/VAST/scope_declarator__S_my.pm \
+.build/EMIfgl6zUZ/Makefile:269:	lib/VAST/scope_declarator__S_our.pm \
+.build/EMIfgl6zUZ/Makefile:270:	lib/VAST/semiarglist.pm \
+.build/EMIfgl6zUZ/Makefile:271:	lib/VAST/signature.pm \
+.build/EMIfgl6zUZ/Makefile:272:	lib/VAST/statement.pm \
+.build/EMIfgl6zUZ/Makefile:273:	lib/VAST/statement_control__S_CATCH.pm \
+.build/EMIfgl6zUZ/Makefile:274:	lib/VAST/statement_control__S_CONTROL.pm \
+.build/EMIfgl6zUZ/Makefile:275:	lib/VAST/statement_control__S_for.pm \
+.build/EMIfgl6zUZ/Makefile:276:	lib/VAST/statement_control__S_if.pm \
+.build/EMIfgl6zUZ/Makefile:277:	lib/VAST/statement_control__S_loop.pm \
+.build/EMIfgl6zUZ/Makefile:278:	lib/VAST/statement_control__S_no.pm \
+.build/EMIfgl6zUZ/Makefile:279:	lib/VAST/statement_control__S_unless.pm \
+.build/EMIfgl6zUZ/Makefile:280:	lib/VAST/statement_control__S_until.pm \
+.build/EMIfgl6zUZ/Makefile:281:	lib/VAST/statement_control__S_use.pm \
+.build/EMIfgl6zUZ/Makefile:282:	lib/VAST/statement_control__S_while.pm \
+.build/EMIfgl6zUZ/Makefile:283:	lib/VAST/statement_prefix__S_do.pm \
+.build/EMIfgl6zUZ/Makefile:284:	lib/VAST/statementlist.pm \
+.build/EMIfgl6zUZ/Makefile:285:	lib/VAST/sublongname.pm \
+.build/EMIfgl6zUZ/Makefile:286:	lib/VAST/term__S_YOU_ARE_HERE.pm \
+.build/EMIfgl6zUZ/Makefile:287:	lib/VAST/term__S_colonpair.pm \
+.build/EMIfgl6zUZ/Makefile:288:	lib/VAST/term__S_identifier.pm \
+.build/EMIfgl6zUZ/Makefile:289:	lib/VAST/term__S_name.pm \
+.build/EMIfgl6zUZ/Makefile:290:	lib/VAST/term__S_self.pm \
+.build/EMIfgl6zUZ/Makefile:291:	lib/VAST/variable.pm
+.build/EMIfgl6zUZ/Makefile:293:PM_TO_BLIB = lib/VAST/postfix__S_PlusPlus.pm \
+.build/EMIfgl6zUZ/Makefile:294:	blib/lib/VAST/postfix__S_PlusPlus.pm \
+.build/EMIfgl6zUZ/Makefile:295:	lib/AST/Branch.pm \
+.build/EMIfgl6zUZ/Makefile:296:	blib/lib/AST/Branch.pm \
+.build/EMIfgl6zUZ/Makefile:297:	lib/VAST/postcircumfix__S_Paren_Thesis.pm \
+.build/EMIfgl6zUZ/Makefile:298:	blib/lib/VAST/postcircumfix__S_Paren_Thesis.pm \
+.build/EMIfgl6zUZ/Makefile:299:	lib/VAST/arglist.pm \
+.build/EMIfgl6zUZ/Makefile:300:	blib/lib/VAST/arglist.pm \
+.build/EMIfgl6zUZ/Makefile:301:	lib/VAST/multi_declarator__S_multi.pm \
+.build/EMIfgl6zUZ/Makefile:302:	blib/lib/VAST/multi_declarator__S_multi.pm \
+.build/EMIfgl6zUZ/Makefile:303:	lib/VAST/infix__S_Comma.pm \
+.build/EMIfgl6zUZ/Makefile:304:	blib/lib/VAST/infix__S_Comma.pm \
+.build/EMIfgl6zUZ/Makefile:305:	lib/AST/InferredTypeTest.pm \
+.build/EMIfgl6zUZ/Makefile:306:	blib/lib/AST/InferredTypeTest.pm \
+.build/EMIfgl6zUZ/Makefile:309:	lib/VAST/scope_declarator__S_my.pm \
+.build/EMIfgl6zUZ/Makefile:310:	blib/lib/VAST/scope_declarator__S_my.pm \
+.build/EMIfgl6zUZ/Makefile:313:	lib/VAST/postcircumfix__S_Bra_Ket.pm \
+.build/EMIfgl6zUZ/Makefile:314:	blib/lib/VAST/postcircumfix__S_Bra_Ket.pm \
+.build/EMIfgl6zUZ/Makefile:315:	lib/AST/Capture.pm \
+.build/EMIfgl6zUZ/Makefile:316:	blib/lib/AST/Capture.pm \
+.build/EMIfgl6zUZ/Makefile:317:	lib/VAST/semiarglist.pm \
+.build/EMIfgl6zUZ/Makefile:318:	blib/lib/VAST/semiarglist.pm \
+.build/EMIfgl6zUZ/Makefile:319:	lib/AST/Block/Simplified.pm \
+.build/EMIfgl6zUZ/Makefile:320:	blib/lib/AST/Block/Simplified.pm \
+.build/EMIfgl6zUZ/Makefile:321:	lib/AST/While.pm \
+.build/EMIfgl6zUZ/Makefile:322:	blib/lib/AST/While.pm \
+.build/EMIfgl6zUZ/Makefile:323:	lib/VAST/Str.pm \
+.build/EMIfgl6zUZ/Makefile:324:	blib/lib/VAST/Str.pm \
+.build/EMIfgl6zUZ/Makefile:325:	lib/Mildew/Backend/DumpAST.pm \
+.build/EMIfgl6zUZ/Makefile:326:	blib/lib/Mildew/Backend/DumpAST.pm \
+.build/EMIfgl6zUZ/Makefile:329:	lib/AST/StringConstant.pm \
+.build/EMIfgl6zUZ/Makefile:330:	blib/lib/AST/StringConstant.pm \
+.build/EMIfgl6zUZ/Makefile:331:	lib/VAST/parameter.pm \
+.build/EMIfgl6zUZ/Makefile:332:	blib/lib/VAST/parameter.pm \
+.build/EMIfgl6zUZ/Makefile:333:	lib/AST/Block.pm \
+.build/EMIfgl6zUZ/Makefile:334:	blib/lib/AST/Block.pm \
+.build/EMIfgl6zUZ/Makefile:335:	lib/VAST/nibbler.pm \
+.build/EMIfgl6zUZ/Makefile:336:	blib/lib/VAST/nibbler.pm \
+.build/EMIfgl6zUZ/Makefile:339:	lib/VAST/statement_control__S_loop.pm \
+.build/EMIfgl6zUZ/Makefile:340:	blib/lib/VAST/statement_control__S_loop.pm \
+.build/EMIfgl6zUZ/Makefile:341:	lib/VAST/statement.pm \
+.build/EMIfgl6zUZ/Makefile:342:	blib/lib/VAST/statement.pm \
+.build/EMIfgl6zUZ/Makefile:343:	lib/VAST/circumfix__S_Paren_Thesis.pm \
+.build/EMIfgl6zUZ/Makefile:344:	blib/lib/VAST/circumfix__S_Paren_Thesis.pm \
+.build/EMIfgl6zUZ/Makefile:345:	lib/VAST/sublongname.pm \
+.build/EMIfgl6zUZ/Makefile:346:	blib/lib/VAST/sublongname.pm \
+.build/EMIfgl6zUZ/Makefile:347:	lib/VAST/dotty__S_Dot.pm \
+.build/EMIfgl6zUZ/Makefile:348:	blib/lib/VAST/dotty__S_Dot.pm \
+.build/EMIfgl6zUZ/Makefile:349:	lib/VAST/infix__S_ColonEqual.pm \
+.build/EMIfgl6zUZ/Makefile:350:	blib/lib/VAST/infix__S_ColonEqual.pm \
+.build/EMIfgl6zUZ/Makefile:351:	lib/VAST/term__S_identifier.pm \
+.build/EMIfgl6zUZ/Makefile:352:	blib/lib/VAST/term__S_identifier.pm \
+.build/EMIfgl6zUZ/Makefile:353:	lib/VAST/statement_control__S_CONTROL.pm \
+.build/EMIfgl6zUZ/Makefile:354:	blib/lib/VAST/statement_control__S_CONTROL.pm \
+.build/EMIfgl6zUZ/Makefile:355:	lib/AST/Loop.pm \
+.build/EMIfgl6zUZ/Makefile:356:	blib/lib/AST/Loop.pm \
+.build/EMIfgl6zUZ/Makefile:357:	lib/AST/Reg.pm \
+.build/EMIfgl6zUZ/Makefile:358:	blib/lib/AST/Reg.pm \
+.build/EMIfgl6zUZ/Makefile:361:	lib/VAST/package_declarator__S_module.pm \
+.build/EMIfgl6zUZ/Makefile:362:	blib/lib/VAST/package_declarator__S_module.pm \
+.build/EMIfgl6zUZ/Makefile:363:	lib/VAST/term__S_self.pm \
+.build/EMIfgl6zUZ/Makefile:364:	blib/lib/VAST/term__S_self.pm \
+.build/EMIfgl6zUZ/Makefile:365:	lib/VAST/blockoid.pm \
+.build/EMIfgl6zUZ/Makefile:366:	blib/lib/VAST/blockoid.pm \
+.build/EMIfgl6zUZ/Makefile:367:	lib/VAST/package_declarator.pm \
+.build/EMIfgl6zUZ/Makefile:368:	blib/lib/VAST/package_declarator.pm \
+.build/EMIfgl6zUZ/Makefile:369:	lib/AST/Pair.pm \
+.build/EMIfgl6zUZ/Makefile:370:	blib/lib/AST/Pair.pm \
+.build/EMIfgl6zUZ/Makefile:373:	lib/VAST/scope_declarator__S_our.pm \
+.build/EMIfgl6zUZ/Makefile:374:	blib/lib/VAST/scope_declarator__S_our.pm \
+.build/EMIfgl6zUZ/Makefile:375:	lib/AST/Goto.pm \
+.build/EMIfgl6zUZ/Makefile:376:	blib/lib/AST/Goto.pm \
+.build/EMIfgl6zUZ/Makefile:379:	lib/VAST/statement_prefix__S_do.pm \
+.build/EMIfgl6zUZ/Makefile:380:	blib/lib/VAST/statement_prefix__S_do.pm \
+.build/EMIfgl6zUZ/Makefile:381:	lib/VAST/statement_control__S_no.pm \
+.build/EMIfgl6zUZ/Makefile:382:	blib/lib/VAST/statement_control__S_no.pm \
+.build/EMIfgl6zUZ/Makefile:383:	lib/AST.pm \
+.build/EMIfgl6zUZ/Makefile:384:	blib/lib/AST.pm \
+.build/EMIfgl6zUZ/Makefile:387:	lib/VAST/statement_control__S_for.pm \
+.build/EMIfgl6zUZ/Makefile:388:	blib/lib/VAST/statement_control__S_for.pm \
+.build/EMIfgl6zUZ/Makefile:389:	lib/VAST/infix__S_Equal.pm \
+.build/EMIfgl6zUZ/Makefile:390:	blib/lib/VAST/infix__S_Equal.pm \
+.build/EMIfgl6zUZ/Makefile:393:	lib/VAST/escape__S_Dollar.pm \
+.build/EMIfgl6zUZ/Makefile:394:	blib/lib/VAST/escape__S_Dollar.pm \
+.build/EMIfgl6zUZ/Makefile:395:	lib/AST/Base.pm \
+.build/EMIfgl6zUZ/Makefile:396:	blib/lib/AST/Base.pm \
+.build/EMIfgl6zUZ/Makefile:397:	lib/AST/Call.pm \
+.build/EMIfgl6zUZ/Makefile:398:	blib/lib/AST/Call.pm \
+.build/EMIfgl6zUZ/Makefile:401:	lib/AST/Assign.pm \
+.build/EMIfgl6zUZ/Makefile:402:	blib/lib/AST/Assign.pm \
+.build/EMIfgl6zUZ/Makefile:403:	lib/VAST/term__S_name.pm \
+.build/EMIfgl6zUZ/Makefile:404:	blib/lib/VAST/term__S_name.pm \
+.build/EMIfgl6zUZ/Makefile:405:	lib/VAST/Chaining.pm \
+.build/EMIfgl6zUZ/Makefile:406:	blib/lib/VAST/Chaining.pm \
+.build/EMIfgl6zUZ/Makefile:407:	lib/VAST/fatarrow.pm \
+.build/EMIfgl6zUZ/Makefile:408:	blib/lib/VAST/fatarrow.pm \
+.build/EMIfgl6zUZ/Makefile:409:	lib/VAST/statement_control__S_until.pm \
+.build/EMIfgl6zUZ/Makefile:410:	blib/lib/VAST/statement_control__S_until.pm \
+.build/EMIfgl6zUZ/Makefile:411:	lib/VAST/prefix__S_Vert.pm \
+.build/EMIfgl6zUZ/Makefile:412:	blib/lib/VAST/prefix__S_Vert.pm \
+.build/EMIfgl6zUZ/Makefile:413:	lib/AST/Seq.pm \
+.build/EMIfgl6zUZ/Makefile:414:	blib/lib/AST/Seq.pm \
+.build/EMIfgl6zUZ/Makefile:415:	lib/VAST/statementlist.pm \
+.build/EMIfgl6zUZ/Makefile:416:	blib/lib/VAST/statementlist.pm \
+.build/EMIfgl6zUZ/Makefile:417:	lib/VAST/integer.pm \
+.build/EMIfgl6zUZ/Makefile:418:	blib/lib/VAST/integer.pm \
+.build/EMIfgl6zUZ/Makefile:419:	lib/VAST/prefix__S_PlusPlus.pm \
+.build/EMIfgl6zUZ/Makefile:420:	blib/lib/VAST/prefix__S_PlusPlus.pm \
+.build/EMIfgl6zUZ/Makefile:421:	lib/VAST/variable.pm \
+.build/EMIfgl6zUZ/Makefile:422:	blib/lib/VAST/variable.pm \
+.build/EMIfgl6zUZ/Makefile:423:	lib/VAST/term__S_colonpair.pm \
+.build/EMIfgl6zUZ/Makefile:424:	blib/lib/VAST/term__S_colonpair.pm \
+.build/EMIfgl6zUZ/Makefile:425:	lib/VAST/args.pm \
+.build/EMIfgl6zUZ/Makefile:426:	blib/lib/VAST/args.pm \
+.build/EMIfgl6zUZ/Makefile:427:	lib/AST/Comment.pm \
+.build/EMIfgl6zUZ/Makefile:428:	blib/lib/AST/Comment.pm \
+.build/EMIfgl6zUZ/Makefile:429:	lib/VAST/term__S_YOU_ARE_HERE.pm \
+.build/EMIfgl6zUZ/Makefile:430:	blib/lib/VAST/term__S_YOU_ARE_HERE.pm \
+.build/EMIfgl6zUZ/Makefile:431:	lib/VAST/postcircumfix__S_Cur_Ly.pm \
+.build/EMIfgl6zUZ/Makefile:432:	blib/lib/VAST/postcircumfix__S_Cur_Ly.pm \
+.build/EMIfgl6zUZ/Makefile:433:	lib/VAST/statement_control__S_if.pm \
+.build/EMIfgl6zUZ/Makefile:434:	blib/lib/VAST/statement_control__S_if.pm \
+.build/EMIfgl6zUZ/Makefile:435:	lib/AST/If.pm \
+.build/EMIfgl6zUZ/Makefile:436:	blib/lib/AST/If.pm \
+.build/EMIfgl6zUZ/Makefile:439:	lib/VAST/longname.pm \
+.build/EMIfgl6zUZ/Makefile:440:	blib/lib/VAST/longname.pm \
+.build/EMIfgl6zUZ/Makefile:441:	lib/VAST/postcircumfix__S_Lt_Gt.pm \
+.build/EMIfgl6zUZ/Makefile:442:	blib/lib/VAST/postcircumfix__S_Lt_Gt.pm \
+.build/EMIfgl6zUZ/Makefile:443:	lib/AST/Block/SSA.pm \
+.build/EMIfgl6zUZ/Makefile:444:	blib/lib/AST/Block/SSA.pm \
+.build/EMIfgl6zUZ/Makefile:445:	lib/VAST/colonpair.pm \
+.build/EMIfgl6zUZ/Makefile:446:	blib/lib/VAST/colonpair.pm \
+.build/EMIfgl6zUZ/Makefile:447:	lib/VAST/method_def.pm \
+.build/EMIfgl6zUZ/Makefile:448:	blib/lib/VAST/method_def.pm \
+.build/EMIfgl6zUZ/Makefile:449:	lib/AST/Let.pm \
+.build/EMIfgl6zUZ/Makefile:450:	blib/lib/AST/Let.pm \
+.build/EMIfgl6zUZ/Makefile:451:	lib/VAST/statement_control__S_use.pm \
+.build/EMIfgl6zUZ/Makefile:452:	blib/lib/VAST/statement_control__S_use.pm \
+.build/EMIfgl6zUZ/Makefile:453:	lib/VAST/statement_control__S_while.pm \
+.build/EMIfgl6zUZ/Makefile:454:	blib/lib/VAST/statement_control__S_while.pm \
+.build/EMIfgl6zUZ/Makefile:455:	lib/AST/IntegerConstant.pm \
+.build/EMIfgl6zUZ/Makefile:456:	blib/lib/AST/IntegerConstant.pm \
+.build/EMIfgl6zUZ/Makefile:459:	lib/VAST/dotty__S_DotStar.pm \
+.build/EMIfgl6zUZ/Makefile:460:	blib/lib/VAST/dotty__S_DotStar.pm \
+.build/EMIfgl6zUZ/Makefile:463:	lib/VAST/comp_unit.pm \
+.build/EMIfgl6zUZ/Makefile:464:	blib/lib/VAST/comp_unit.pm \
+.build/EMIfgl6zUZ/Makefile:465:	lib/VAST.pm \
+.build/EMIfgl6zUZ/Makefile:466:	blib/lib/VAST.pm \
+.build/EMIfgl6zUZ/Makefile:467:	lib/VAST/escape__S_Back.pm \
+.build/EMIfgl6zUZ/Makefile:468:	blib/lib/VAST/escape__S_Back.pm \
+.build/EMIfgl6zUZ/Makefile:469:	lib/VAST/statement_control__S_CATCH.pm \
+.build/EMIfgl6zUZ/Makefile:470:	blib/lib/VAST/statement_control__S_CATCH.pm \
+.build/EMIfgl6zUZ/Makefile:471:	lib/VAST/signature.pm \
+.build/EMIfgl6zUZ/Makefile:472:	blib/lib/VAST/signature.pm \
+.build/EMIfgl6zUZ/Makefile:475:	lib/VAST/infix__S_AmpAmp.pm \
+.build/EMIfgl6zUZ/Makefile:476:	blib/lib/VAST/infix__S_AmpAmp.pm \
+.build/EMIfgl6zUZ/Makefile:477:	lib/VAST/statement_control__S_unless.pm \
+.build/EMIfgl6zUZ/Makefile:478:	blib/lib/VAST/statement_control__S_unless.pm \
+.build/EMIfgl6zUZ/Makefile:479:	lib/VAST/scope_declarator__S_has.pm \
+.build/EMIfgl6zUZ/Makefile:480:	blib/lib/VAST/scope_declarator__S_has.pm \
+.build/EMIfgl6zUZ/Makefile:481:	lib/VAST/routine_def.pm \
+.build/EMIfgl6zUZ/Makefile:482:	blib/lib/VAST/routine_def.pm \
+.build/EMIfgl6zUZ/Makefile:483:	lib/VAST/identifier.pm \
+.build/EMIfgl6zUZ/Makefile:484:	blib/lib/VAST/identifier.pm \
+.build/EMIfgl6zUZ/Makefile:485:	lib/AST/Helpers.pm \
+.build/EMIfgl6zUZ/Makefile:486:	blib/lib/AST/Helpers.pm \
+.build/EMIfgl6zUZ/Makefile:487:	lib/VAST/circumfix__S_Cur_Ly.pm \
+.build/EMIfgl6zUZ/Makefile:488:	blib/lib/VAST/circumfix__S_Cur_Ly.pm \
+.build/EMIfgl6zUZ/Makefile:489:	lib/VAST/infix__S_VertVert.pm \
+.build/EMIfgl6zUZ/Makefile:490:	blib/lib/VAST/infix__S_VertVert.pm \
+.build/EMIfgl6zUZ/Makefile:491:	lib/AST/Phi.pm \
+.build/EMIfgl6zUZ/Makefile:492:	blib/lib/AST/Phi.pm \
+.build/EMIfgl6zUZ/Makefile:586:PASTHRU = LIBPERL_A="$(LIBPERL_A)"\
+.build/EMIfgl6zUZ/Makefile:717:	lib/Mildew/Backend/DumpAST.pm \
+.build/EMIfgl6zUZ/Makefile:721:	  lib/Mildew/Backend/DumpAST.pm $(INST_MAN3DIR)/Mildew::Backend::DumpAST.$(MAN3EXT) \
+.build/EMIfgl6zUZ/Makefile:909:	cd $(DISTVNAME) && $(MAKE) $(PASTHRU)
+.build/EMIfgl6zUZ/Makefile:910:	cd $(DISTVNAME) && $(MAKE) test $(PASTHRU)
+.build/EMIfgl6zUZ/Makefile:1148:	  lib/VAST/postfix__S_PlusPlus.pm blib/lib/VAST/postfix__S_PlusPlus.pm \
+.build/EMIfgl6zUZ/Makefile:1149:	  lib/AST/Branch.pm blib/lib/AST/Branch.pm \
+.build/EMIfgl6zUZ/Makefile:1150:	  lib/VAST/postcircumfix__S_Paren_Thesis.pm blib/lib/VAST/postcircumfix__S_Paren_Thesis.pm \
+.build/EMIfgl6zUZ/Makefile:1151:	  lib/VAST/arglist.pm blib/lib/VAST/arglist.pm \
+.build/EMIfgl6zUZ/Makefile:1152:	  lib/VAST/multi_declarator__S_multi.pm blib/lib/VAST/multi_declarator__S_multi.pm \
+.build/EMIfgl6zUZ/Makefile:1153:	  lib/VAST/infix__S_Comma.pm blib/lib/VAST/infix__S_Comma.pm \
+.build/EMIfgl6zUZ/Makefile:1154:	  lib/AST/InferredTypeTest.pm blib/lib/AST/InferredTypeTest.pm \
+.build/EMIfgl6zUZ/Makefile:1156:	  lib/VAST/scope_declarator__S_my.pm blib/lib/VAST/scope_declarator__S_my.pm \
+.build/EMIfgl6zUZ/Makefile:1158:	  lib/VAST/postcircumfix__S_Bra_Ket.pm blib/lib/VAST/postcircumfix__S_Bra_Ket.pm \
+.build/EMIfgl6zUZ/Makefile:1159:	  lib/AST/Capture.pm blib/lib/AST/Capture.pm \
+.build/EMIfgl6zUZ/Makefile:1160:	  lib/VAST/semiarglist.pm blib/lib/VAST/semiarglist.pm \
+.build/EMIfgl6zUZ/Makefile:1161:	  lib/AST/Block/Simplified.pm blib/lib/AST/Block/Simplified.pm \
+.build/EMIfgl6zUZ/Makefile:1162:	  lib/AST/While.pm blib/lib/AST/While.pm \
+.build/EMIfgl6zUZ/Makefile:1163:	  lib/VAST/Str.pm blib/lib/VAST/Str.pm \
+.build/EMIfgl6zUZ/Makefile:1164:	  lib/Mildew/Backend/DumpAST.pm blib/lib/Mildew/Backend/DumpAST.pm \
+.build/EMIfgl6zUZ/Makefile:1166:	  lib/AST/StringConstant.pm blib/lib/AST/StringConstant.pm \
+.build/EMIfgl6zUZ/Makefile:1167:	  lib/VAST/parameter.pm blib/lib/VAST/parameter.pm \
+.build/EMIfgl6zUZ/Makefile:1168:	  lib/AST/Block.pm blib/lib/AST/Block.pm \
+.build/EMIfgl6zUZ/Makefile:1169:	  lib/VAST/nibbler.pm blib/lib/VAST/nibbler.pm \
+.build/EMIfgl6zUZ/Makefile:1171:	  lib/VAST/statement_control__S_loop.pm blib/lib/VAST/statement_control__S_loop.pm \
+.build/EMIfgl6zUZ/Makefile:1172:	  lib/VAST/statement.pm blib/lib/VAST/statement.pm \
+.build/EMIfgl6zUZ/Makefile:1173:	  lib/VAST/circumfix__S_Paren_Thesis.pm blib/lib/VAST/circumfix__S_Paren_Thesis.pm \
+.build/EMIfgl6zUZ/Makefile:1174:	  lib/VAST/sublongname.pm blib/lib/VAST/sublongname.pm \
+.build/EMIfgl6zUZ/Makefile:1175:	  lib/VAST/dotty__S_Dot.pm blib/lib/VAST/dotty__S_Dot.pm \
+.build/EMIfgl6zUZ/Makefile:1176:	  lib/VAST/infix__S_ColonEqual.pm blib/lib/VAST/infix__S_ColonEqual.pm \
+.build/EMIfgl6zUZ/Makefile:1177:	  lib/VAST/term__S_identifier.pm blib/lib/VAST/term__S_identifier.pm \
+.build/EMIfgl6zUZ/Makefile:1178:	  lib/VAST/statement_control__S_CONTROL.pm blib/lib/VAST/statement_control__S_CONTROL.pm \
+.build/EMIfgl6zUZ/Makefile:1179:	  lib/AST/Loop.pm blib/lib/AST/Loop.pm \
+.build/EMIfgl6zUZ/Makefile:1180:	  lib/AST/Reg.pm blib/lib/AST/Reg.pm \
+.build/EMIfgl6zUZ/Makefile:1182:	  lib/VAST/package_declarator__S_module.pm blib/lib/VAST/package_declarator__S_module.pm \
+.build/EMIfgl6zUZ/Makefile:1183:	  lib/VAST/term__S_self.pm blib/lib/VAST/term__S_self.pm \
+.build/EMIfgl6zUZ/Makefile:1184:	  lib/VAST/blockoid.pm blib/lib/VAST/blockoid.pm \
+.build/EMIfgl6zUZ/Makefile:1185:	  lib/VAST/package_declarator.pm blib/lib/VAST/package_declarator.pm \
+.build/EMIfgl6zUZ/Makefile:1186:	  lib/AST/Pair.pm blib/lib/AST/Pair.pm \
+.build/EMIfgl6zUZ/Makefile:1188:	  lib/VAST/scope_declarator__S_our.pm blib/lib/VAST/scope_declarator__S_our.pm \
+.build/EMIfgl6zUZ/Makefile:1189:	  lib/AST/Goto.pm blib/lib/AST/Goto.pm \
+.build/EMIfgl6zUZ/Makefile:1192:	  lib/VAST/statement_prefix__S_do.pm blib/lib/VAST/statement_prefix__S_do.pm \
+.build/EMIfgl6zUZ/Makefile:1193:	  lib/VAST/statement_control__S_no.pm blib/lib/VAST/statement_control__S_no.pm \
+.build/EMIfgl6zUZ/Makefile:1194:	  lib/AST.pm blib/lib/AST.pm \
+.build/EMIfgl6zUZ/Makefile:1196:	  lib/VAST/statement_control__S_for.pm blib/lib/VAST/statement_control__S_for.pm \
+.build/EMIfgl6zUZ/Makefile:1197:	  lib/VAST/infix__S_Equal.pm blib/lib/VAST/infix__S_Equal.pm \
+.build/EMIfgl6zUZ/Makefile:1199:	  lib/VAST/escape__S_Dollar.pm blib/lib/VAST/escape__S_Dollar.pm \
+.build/EMIfgl6zUZ/Makefile:1200:	  lib/AST/Base.pm blib/lib/AST/Base.pm \
+.build/EMIfgl6zUZ/Makefile:1201:	  lib/AST/Call.pm blib/lib/AST/Call.pm \
+.build/EMIfgl6zUZ/Makefile:1203:	  lib/AST/Assign.pm blib/lib/AST/Assign.pm \
+.build/EMIfgl6zUZ/Makefile:1204:	  lib/VAST/term__S_name.pm blib/lib/VAST/term__S_name.pm \
+.build/EMIfgl6zUZ/Makefile:1205:	  lib/VAST/Chaining.pm blib/lib/VAST/Chaining.pm \
+.build/EMIfgl6zUZ/Makefile:1206:	  lib/VAST/fatarrow.pm blib/lib/VAST/fatarrow.pm \
+.build/EMIfgl6zUZ/Makefile:1207:	  lib/VAST/statement_control__S_until.pm blib/lib/VAST/statement_control__S_until.pm \
+.build/EMIfgl6zUZ/Makefile:1208:	  lib/VAST/prefix__S_Vert.pm blib/lib/VAST/prefix__S_Vert.pm \
+.build/EMIfgl6zUZ/Makefile:1209:	  lib/AST/Seq.pm blib/lib/AST/Seq.pm \
+.build/EMIfgl6zUZ/Makefile:1210:	  lib/VAST/statementlist.pm blib/lib/VAST/statementlist.pm \
+.build/EMIfgl6zUZ/Makefile:1211:	  lib/VAST/integer.pm blib/lib/VAST/integer.pm \
+.build/EMIfgl6zUZ/Makefile:1212:	  lib/VAST/prefix__S_PlusPlus.pm blib/lib/VAST/prefix__S_PlusPlus.pm \
+.build/EMIfgl6zUZ/Makefile:1213:	  lib/VAST/variable.pm blib/lib/VAST/variable.pm \
+.build/EMIfgl6zUZ/Makefile:1214:	  lib/VAST/term__S_colonpair.pm blib/lib/VAST/term__S_colonpair.pm \
+.build/EMIfgl6zUZ/Makefile:1215:	  lib/VAST/args.pm blib/lib/VAST/args.pm \
+.build/EMIfgl6zUZ/Makefile:1216:	  lib/AST/Comment.pm blib/lib/AST/Comment.pm \
+.build/EMIfgl6zUZ/Makefile:1217:	  lib/VAST/term__S_YOU_ARE_HERE.pm blib/lib/VAST/term__S_YOU_ARE_HERE.pm \
+.build/EMIfgl6zUZ/Makefile:1218:	  lib/VAST/postcircumfix__S_Cur_Ly.pm blib/lib/VAST/postcircumfix__S_Cur_Ly.pm \
+.build/EMIfgl6zUZ/Makefile:1219:	  lib/VAST/statement_control__S_if.pm blib/lib/VAST/statement_control__S_if.pm \
+.build/EMIfgl6zUZ/Makefile:1220:	  lib/AST/If.pm blib/lib/AST/If.pm \
+.build/EMIfgl6zUZ/Makefile:1222:	  lib/VAST/longname.pm blib/lib/VAST/longname.pm \
+.build/EMIfgl6zUZ/Makefile:1223:	  lib/VAST/postcircumfix__S_Lt_Gt.pm blib/lib/VAST/postcircumfix__S_Lt_Gt.pm \
+.build/EMIfgl6zUZ/Makefile:1224:	  lib/AST/Block/SSA.pm blib/lib/AST/Block/SSA.pm \
+.build/EMIfgl6zUZ/Makefile:1225:	  lib/VAST/colonpair.pm blib/lib/VAST/colonpair.pm \
+.build/EMIfgl6zUZ/Makefile:1226:	  lib/VAST/method_def.pm blib/lib/VAST/method_def.pm \
+.build/EMIfgl6zUZ/Makefile:1227:	  lib/AST/Let.pm blib/lib/AST/Let.pm \
+.build/EMIfgl6zUZ/Makefile:1228:	  lib/VAST/statement_control__S_use.pm blib/lib/VAST/statement_control__S_use.pm \
+.build/EMIfgl6zUZ/Makefile:1229:	  lib/VAST/statement_control__S_while.pm blib/lib/VAST/statement_control__S_while.pm \
+.build/EMIfgl6zUZ/Makefile:1230:	  lib/AST/IntegerConstant.pm blib/lib/AST/IntegerConstant.pm \
+.build/EMIfgl6zUZ/Makefile:1232:	  lib/VAST/dotty__S_DotStar.pm blib/lib/VAST/dotty__S_DotStar.pm \
+.build/EMIfgl6zUZ/Makefile:1234:	  lib/VAST/comp_unit.pm blib/lib/VAST/comp_unit.pm \
+.build/EMIfgl6zUZ/Makefile:1235:	  lib/VAST.pm blib/lib/VAST.pm \
+.build/EMIfgl6zUZ/Makefile:1236:	  lib/VAST/escape__S_Back.pm blib/lib/VAST/escape__S_Back.pm 
+.build/EMIfgl6zUZ/Makefile:1238:	  lib/VAST/statement_control__S_CATCH.pm blib/lib/VAST/statement_control__S_CATCH.pm \
+.build/EMIfgl6zUZ/Makefile:1239:	  lib/VAST/signature.pm blib/lib/VAST/signature.pm \
+.build/EMIfgl6zUZ/Makefile:1241:	  lib/VAST/infix__S_AmpAmp.pm blib/lib/VAST/infix__S_AmpAmp.pm \
+.build/EMIfgl6zUZ/Makefile:1242:	  lib/VAST/statement_control__S_unless.pm blib/lib/VAST/statement_control__S_unless.pm \
+.build/EMIfgl6zUZ/Makefile:1243:	  lib/VAST/scope_declarator__S_has.pm blib/lib/VAST/scope_declarator__S_has.pm \
+.build/EMIfgl6zUZ/Makefile:1244:	  lib/VAST/routine_def.pm blib/lib/VAST/routine_def.pm \
+.build/EMIfgl6zUZ/Makefile:1245:	  lib/VAST/identifier.pm blib/lib/VAST/identifier.pm \
+.build/EMIfgl6zUZ/Makefile:1246:	  lib/AST/Helpers.pm blib/lib/AST/Helpers.pm \
+.build/EMIfgl6zUZ/Makefile:1247:	  lib/VAST/circumfix__S_Cur_Ly.pm blib/lib/VAST/circumfix__S_Cur_Ly.pm \
+.build/EMIfgl6zUZ/Makefile:1248:	  lib/VAST/infix__S_VertVert.pm blib/lib/VAST/infix__S_VertVert.pm \
+.build/EMIfgl6zUZ/Makefile:1249:	  lib/AST/Phi.pm blib/lib/AST/Phi.pm \
