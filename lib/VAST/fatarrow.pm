@@ -1,6 +1,6 @@
 package VAST::fatarrow;
 BEGIN {
-  $VAST::fatarrow::VERSION = '0.02';
+  $VAST::fatarrow::VERSION = '0.03';
 }
 use utf8;
 use strict;

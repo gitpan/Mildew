@@ -4,7 +4,7 @@ use MooseX::Declare;
     # STD needs to be important from the main package
     package main;
 BEGIN {
-  $main::VERSION = '0.02';
+  $main::VERSION = '0.03';
 }
     use STD;
 }
@@ -56,10 +56,6 @@ class Mildew::Frontend::STD {
             }
         } else {
         }
-    }
-    method _build_syml_search_path {
-        require Mildew::Setting::SMOP;
-        [$self->tmp,Mildew::Setting::SMOP::std_tmp_files_path().'/']
     }
     method _build_syml_search_path {
         require Mildew::Setting::SMOP;

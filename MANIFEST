@@ -99,7 +99,6 @@ lib/VAST/statement_control__S_while.pm
 lib/VAST/statement_prefix__S_do.pm
 lib/VAST/statementlist.pm
 lib/VAST/sublongname.pm
-lib/VAST/term__S_YOU_ARE_HERE.pm
 lib/VAST/term__S_colonpair.pm
 lib/VAST/term__S_identifier.pm
 lib/VAST/term__S_name.pm
@@ -109,3 +108,4 @@ t/ast-helpers.t
 t/m0ld.t
 t/simplified.t
 t/ssa.t
+you_are_here

@@ -1,6 +1,6 @@
 package VAST::comp_unit;
 BEGIN {
-  $VAST::comp_unit::VERSION = '0.02';
+  $VAST::comp_unit::VERSION = '0.03';
 }
 use utf8;
 use strict;

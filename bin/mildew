@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 package Mildew::script;
 BEGIN {
-  $Mildew::script::VERSION = '0.02';
+  $Mildew::script::VERSION = '0.03';
 }
 use Bread::Board;
 use File::Slurp qw(slurp);
@@ -149,7 +149,7 @@ if (@ARGV == 1 && $ARGV[0] eq '--server') {
     {
     package Dummy;
 BEGIN {
-  $Dummy::VERSION = '0.02';
+  $Dummy::VERSION = '0.03';
 }
     require Mildew::Backend::C;
     require Mildew::Backend::Perlesque;

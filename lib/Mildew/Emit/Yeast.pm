@@ -1,6 +1,6 @@
 package Mildew::Emit::Yeast;
 BEGIN {
-  $Mildew::Emit::Yeast::VERSION = '0.02';
+  $Mildew::Emit::Yeast::VERSION = '0.03';
 }
 sub assign {
     my ($target,$value) = @_;

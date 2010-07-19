@@ -1,6 +1,6 @@
 package VAST::signature;
 BEGIN {
-  $VAST::signature::VERSION = '0.02';
+  $VAST::signature::VERSION = '0.03';
 }
 use utf8;
 use strict;

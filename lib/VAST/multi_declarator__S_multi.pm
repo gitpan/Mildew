@@ -1,6 +1,6 @@
 package VAST::multi_declarator__S_multi;
 BEGIN {
-  $VAST::multi_declarator__S_multi::VERSION = '0.02';
+  $VAST::multi_declarator__S_multi::VERSION = '0.03';
 }
 use utf8;
 use strict;

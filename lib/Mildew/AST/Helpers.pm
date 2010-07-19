@@ -1,6 +1,6 @@
 package Mildew::AST::Helpers;
 BEGIN {
-  $Mildew::AST::Helpers::VERSION = '0.02';
+  $Mildew::AST::Helpers::VERSION = '0.03';
 }
 use Exporter 'import';
 our @EXPORT = qw(string reg integer call FETCH lookup capturize let fcall name_components empty_sig routine code move_CONTROL XXX trailing_return varname lookupf curlies named_and_positional dump lookup_package YYY wrap_in_block);

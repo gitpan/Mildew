@@ -31,11 +31,11 @@ my %WriteMakefileArgs = (
     'Moose' => '1.03',
     'MooseX::Declare' => '0.33',
     'Regexp::Grammars' => '1.002',
-    'STD' => '0',
+    'STD' => '0.02',
     'Set::Object' => '1.26',
     'YAML::XS' => '0'
   },
-  'VERSION' => '0.02',
+  'VERSION' => '0.03',
   'test' => {
     'TESTS' => 't/*.t'
   }

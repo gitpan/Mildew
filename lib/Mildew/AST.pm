@@ -4,7 +4,7 @@ use utf8;
 {
 package Mildew::AST;
 BEGIN {
-  $Mildew::AST::VERSION = '0.02';
+  $Mildew::AST::VERSION = '0.03';
 }
 sub unique_id {
     state $id = 0;

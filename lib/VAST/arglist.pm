@@ -1,6 +1,6 @@
 package VAST::arglist;
 BEGIN {
-  $VAST::arglist::VERSION = '0.02';
+  $VAST::arglist::VERSION = '0.03';
 }
 use utf8;
 use strict;
