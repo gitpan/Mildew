@@ -1,5 +1,8 @@
 #!/usr/bin/perl
 package Mildew::script;
+BEGIN {
+  $Mildew::script::VERSION = '0.02';
+}
 use Bread::Board;
 use File::Slurp qw(slurp);
 use Getopt::Long qw(GetOptionsFromArray);
@@ -145,6 +148,9 @@ if (@ARGV == 1 && $ARGV[0] eq '--server') {
     require App::Persistent::Server;
     {
     package Dummy;
+BEGIN {
+  $Dummy::VERSION = '0.02';
+}
     require Mildew::Backend::C;
     require Mildew::Backend::Perlesque;
     require Mildew::Frontend::STD;

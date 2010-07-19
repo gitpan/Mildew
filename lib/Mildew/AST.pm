@@ -3,6 +3,9 @@ use MooseX::Declare;
 use utf8;
 {
 package Mildew::AST;
+BEGIN {
+  $Mildew::AST::VERSION = '0.02';
+}
 sub unique_id {
     state $id = 0;
     '$id'.$id++;

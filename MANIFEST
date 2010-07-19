@@ -2,9 +2,7 @@ LICENSE
 MANIFEST
 META.yml
 Makefile.PL
-ast
 bin/mildew
-diff
 dist.ini
 lib/Mildew.pm
 lib/Mildew/AST.pm
@@ -107,11 +105,7 @@ lib/VAST/term__S_identifier.pm
 lib/VAST/term__S_name.pm
 lib/VAST/term__S_self.pm
 lib/VAST/variable.pm
-lib6/adhoc_signatures.pm6
-replace
 t/ast-helpers.t
 t/m0ld.t
 t/simplified.t
 t/ssa.t
-type
-x

@@ -1,4 +1,7 @@
 package Mildew::SSA;
+BEGIN {
+  $Mildew::SSA::VERSION = '0.02';
+}
 use Scalar::Util qw(refaddr);
 use Set::Object ();
 use List::MoreUtils qw(uniq);

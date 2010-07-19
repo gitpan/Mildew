@@ -3,6 +3,9 @@ use MooseX::Declare;
 {
     # STD needs to be important from the main package
     package main;
+BEGIN {
+  $main::VERSION = '0.02';
+}
     use STD;
 }
 BEGIN {package main;require 'viv'};

@@ -1,2 +1,0 @@
-#!/usr/bin/perl -i -p
-s/\bAST\b/Mildew::AST/g;

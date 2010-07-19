@@ -1,4 +1,7 @@
 package VAST::routine_def;
+BEGIN {
+  $VAST::routine_def::VERSION = '0.02';
+}
 use utf8;
 use strict;
 use warnings;

@@ -26,4 +26,4 @@ requires:
   STD: 0
   Set::Object: 1.26
   YAML::XS: 0
-version: 0.01
+version: 0.02
