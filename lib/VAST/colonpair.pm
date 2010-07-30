@@ -1,6 +1,6 @@
 package VAST::colonpair;
 BEGIN {
-  $VAST::colonpair::VERSION = '0.03';
+  $VAST::colonpair::VERSION = '0.04';
 }
 use utf8;
 use strict;

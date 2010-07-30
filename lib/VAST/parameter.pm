@@ -1,6 +1,6 @@
 package VAST::parameter;
 BEGIN {
-  $VAST::parameter::VERSION = '0.03';
+  $VAST::parameter::VERSION = '0.04';
 }
 use utf8;
 use strict;

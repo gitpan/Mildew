@@ -1,6 +1,6 @@
 package VAST::blockoid;
 BEGIN {
-  $VAST::blockoid::VERSION = '0.03';
+  $VAST::blockoid::VERSION = '0.04';
 }
 use utf8;
 use strict;

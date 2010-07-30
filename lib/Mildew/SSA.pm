@@ -1,6 +1,6 @@
 package Mildew::SSA;
 BEGIN {
-  $Mildew::SSA::VERSION = '0.03';
+  $Mildew::SSA::VERSION = '0.04';
 }
 use Scalar::Util qw(refaddr);
 use Set::Object ();

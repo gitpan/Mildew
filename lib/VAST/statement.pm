@@ -1,7 +1,7 @@
 #XXX MooseX::Declare
 package VAST::statement;
 BEGIN {
-  $VAST::statement::VERSION = '0.03';
+  $VAST::statement::VERSION = '0.04';
 }
 use utf8;
 use strict;

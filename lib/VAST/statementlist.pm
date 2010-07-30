@@ -1,6 +1,6 @@
 package VAST::statementlist;
 BEGIN {
-  $VAST::statementlist::VERSION = '0.03';
+  $VAST::statementlist::VERSION = '0.04';
 }
 use utf8;
 use strict;

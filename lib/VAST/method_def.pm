@@ -1,6 +1,6 @@
 package VAST::method_def;
 BEGIN {
-  $VAST::method_def::VERSION = '0.03';
+  $VAST::method_def::VERSION = '0.04';
 }
 use utf8;
 use strict;

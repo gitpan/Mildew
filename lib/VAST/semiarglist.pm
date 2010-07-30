@@ -1,6 +1,6 @@
 package VAST::semiarglist;
 BEGIN {
-  $VAST::semiarglist::VERSION = '0.03';
+  $VAST::semiarglist::VERSION = '0.04';
 }
 use utf8;
 use strict;

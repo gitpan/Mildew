@@ -4,7 +4,7 @@ use MooseX::Declare;
 {
     package VAST;
 BEGIN {
-  $VAST::VERSION = '0.03';
+  $VAST::VERSION = '0.04';
 }
     use Module::Pluggable sub_name=>"subclasses",search_path=>["VAST"],require=>1;
     # load all the VAST::* subclasses

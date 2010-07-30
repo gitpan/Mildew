@@ -4,7 +4,7 @@ use MooseX::Declare;
     # STD needs to be important from the main package
     package main;
 BEGIN {
-  $main::VERSION = '0.03';
+  $main::VERSION = '0.04';
 }
     use STD;
 }
@@ -69,7 +69,7 @@ class Mildew::Frontend::STD {
         $::ORIG = $source;
         local $ENV{'PERL6LIB'} = $self->PERL6LIB; 
         mkdir($self->tmp);
-        my $m = STD->parse($source, actions=>'Actions',tmp_prefix=>$self->tmp,syml_search_path=>$self->syml_search_path,setting=>$self->setting,filename=>md4_hex($source));
+        my $m = STD->parse($source, actions=>'STD::Actions',tmp_prefix=>$self->tmp,syml_search_path=>$self->syml_search_path,setting=>$self->setting,filename=>md4_hex($source));
         local $ENV{'DEFAULT_SETTING_FOR_MODULES'} = 'MildewCORE';
 
 
